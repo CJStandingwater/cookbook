@@ -1,0 +1,43 @@
+{
+  "title": "Basic Recipe",
+  "author": "Author Name or Alias",
+
+  "ingredients": [
+    {
+      "items": [
+        {
+          "item": "something",
+          "amount": 1,
+          "unit": "",
+          "alt_amount": 60,
+          "alt_unit": "grams"
+        },
+        {
+          "item": "something else",
+          "amount": 1,
+          "unit": "",
+          "alt_amount": 120,
+          "alt_unit": "grams"
+        },
+        {
+          "item": "another thing",
+          "amount": 1,
+          "unit": "tbsp",
+          "alt_amount": 15,
+          "alt_unit": "ml"
+        }
+      ]
+    }
+  ],
+
+  "instructions": [
+    {
+      "title": "Do Thing",
+      "content": "This should tell someone how to 'Do Thing'",
+      "note": [
+        "A note should define a single concept pertaining to the current step.",
+        "Add as many as needed."
+      ]
+    }
+  ]
+}

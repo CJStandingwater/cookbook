@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Recipe",
+  "type": "object",
+  "required": ["title", "author", "ingredients", "instructions"],
+  "properties": {
+    "title": { "type": "string" },
+    "author": { "type": "string" },
+
+    "ingredients": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "section": { "type": "string" },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["item", "amount"],
+              "properties": {
+                "item": { "type": "string" },
+                "amount": { "type": "number" },
+                "unit": { "type": "string" },
+                "alt_amount": { "type": "number" },
+                "alt_unit": { "type": "string" },
+                "note": { "type": "string" },
+                "substitutes": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["item", "amount"],
+                      "properties": {
+                        "item": { "type": "string" },
+                        "amount": { "type": "number" },
+                        "unit": { "type": "string" },
+                        "alt_amount": { "type": "number" },
+                        "alt_unit": { "type": "string" },
+                        "note": { "type": "string" }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["items"],
+        "additionalProperties": false
+      }
+    },
+
+    "instructions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "content"],
+        "properties": {
+          "title": { "type": "string" },
+          "content": { "type": "string" },
+          "note": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "timings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "value"],
+        "properties": {
+          "title": { "type": "string" },
+          "value": { "type": "number" },
+          "unit": {
+            "type": "string",
+            "enum": ["minutes", "minute", "hours", "hour"]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "servings": { "type": "number" },
+
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "breakfast", "lunch", "dinner", "snack", "dessert",
+          "smoothie", "vegan", "vegetarian", "gluten-free",
+          "fiber-rich", "high-protein", "low-carb",
+          "fall", "winter", "spring", "summer",
+          "holiday", "comfort", "quick", "slow-cook", "fusion"
+        ]
+      }
+    },
+
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+
+    "nutrition": {
+      "type": "object",
+      "properties": {
+        "calories": { "type": "number" },
+        "protein": { "type": "number" },
+        "fat": { "type": "number" },
+        "carbohydrates": { "type": "number" },
+        "fiber": { "type": "number" }
+      },
+      "additionalProperties": false
+    },
+
+    "variations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+
+    "source": { "type": "string" },
+
+    "tools": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+
+    "difficulty": {
+      "type": "string",
+      "enum": ["easy", "moderate", "hard"]
+    }
+  },
+  "additionalProperties": false
+}

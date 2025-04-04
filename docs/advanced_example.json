@@ -1,0 +1,74 @@
+{
+  "title": "Advanced Recipe",
+  "author": "Author Name or Alias",
+
+  "ingredients": [
+    {
+      "section": "Ingredient Section (Optional)",
+      "items": [
+        {
+          "item": "Ingredient Name",
+          "amount": 1.5,
+          "unit": "cups",
+          "alt_amount": 180,
+          "alt_unit": "grams",
+          "note": "Brief usage or substitution note (Optional)"
+        },
+        {
+          "item": "Another Ingredient",
+          "amount": 1,
+          "unit": "tbsp",
+          "alt_amount": 15,
+          "alt_unit": "ml"
+        }
+      ]
+    }
+  ],
+
+  "instructions": [
+    {
+      "title": "Step Title",
+      "content": "Clear instructions describing the actions to complete this step.",
+      "note": [
+        "A brief note or substitution relevant to this step (Optional).",
+        "Additional notes can be added as needed."
+      ]
+    },
+    {
+      "title": "Next Step Title",
+      "content": "Instructions for the next part of the recipe."
+    }
+  ],
+
+  "timings": [
+    { "title": "prep", "value": 10 },
+    { "title": "cook", "value": 15 },
+    { "title": "total", "value": 25 }
+  ],
+
+  "servings": 4,
+
+  "tags": [
+    "breakfast", "lunch", "dinner"
+  ],
+
+  "notes": [
+    "General notes or tips about the recipe."
+  ],
+
+  "nutrition": {
+    "calories": 320,
+    "protein": 8,
+    "fat": 12,
+    "carbohydrates": 42,
+    "fiber": 2
+  },
+
+  "variations": [
+    "Possible recipe variations or ingredient swaps."
+  ],
+
+  "source": "Original source or inspiration for this recipe (Optional)",
+  "tools": ["tool 1", "tool 2", "etc."],
+  "difficulty": "moderate"
+}
