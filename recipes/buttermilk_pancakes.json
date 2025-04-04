@@ -1,0 +1,147 @@
+{
+  "title": "Classic Pancakes",
+  "author": "Fen",
+
+  "ingredients": [
+    {
+      "section": "Wet Ingredients",
+      "items": [
+        {
+          "item": "milk",
+          "amount": 2,
+          "unit": "cups",
+          "alt_amount": 480,
+          "alt_unit": "ml",
+          "substitutes": [
+            [
+              {"item": "half and half", "amount": 2, "unit": "cups", "alt_amount": 480, "alt_unit": "ml"}
+            ],
+            [
+              {"item": "buttermilk", "amount": 2, "unit": "cups", "alt_amount": 480, "alt_unit": "ml"}
+            ]
+          ]
+        },
+        {
+          "item": "lemon juice",
+          "amount": 2,
+          "unit": "tbsp",
+          "alt_amount": 30,
+          "alt_unit": "ml"
+        },
+        {
+          "item": "oil",
+          "amount": 0.25,
+          "unit": "cup",
+          "alt_amount": 60,
+          "alt_unit": "ml"
+        },
+        {
+          "item": "eggs",
+          "amount": 3,
+          "unit": "medium",
+          "alt_amount": 150,
+          "alt_unit": "grams",
+          "note": "or use 2 large eggs"
+        },
+        {
+          "item": "vanilla extract",
+          "amount": 1,
+          "unit": "tbsp",
+          "alt_amount": 15,
+          "alt_unit": "ml"
+        }
+      ]
+    },
+    {
+      "section": "Dry Ingredients",
+      "items": [
+        {
+          "item": "flour",
+          "amount": 2,
+          "unit": "cups",
+          "alt_amount": 240,
+          "alt_unit": "grams"
+        },
+        {
+          "item": "sugar",
+          "amount": 0.5,
+          "unit": "cup",
+          "alt_amount": 100,
+          "alt_unit": "grams"
+        },
+        {
+          "item": "baking powder",
+          "amount": 1,
+          "unit": "tbsp",
+          "alt_amount": 15,
+          "alt_unit": "grams"
+        },
+        {
+          "item": "baking soda",
+          "amount": 1,
+          "unit": "tsp",
+          "alt_amount": 5,
+          "alt_unit": "grams"
+        },
+        {
+          "item": "salt",
+          "amount": 0.25,
+          "unit": "tsp",
+          "alt_amount": 1,
+          "alt_unit": "grams"
+        }
+      ]
+    }
+  ],
+
+  "instructions": [
+    {
+      "title": "Prepare Buttermilk Substitute",
+      "content": "Combine milk and lemon juice. Let it sit for 5-10 minutes, whisking periodically.",
+      "note": [
+        "Skip this step if using buttermilk directly."
+      ]
+    },
+    {
+      "title": "Combine Wet Ingredients",
+      "content": "Whisk oil, eggs, and vanilla extract into the milk mixture."
+    },
+    {
+      "title": "Mix Dry Ingredients",
+      "content": "Whisk flour, sugar, baking powder, baking soda, and salt in a separate bowl.",
+      "note": [
+        "Add spices like cinnamon or nutmeg at this step if desired."
+      ]
+    },
+    {
+      "title": "Combine Batter",
+      "content": "Pour wet ingredients into the dry ingredients and whisk quickly until combined.",
+      "note": [
+        "Quickly fold in fruits or nuts now if desired. Avoid overmixing."
+      ]
+    },
+    {
+      "title": "Cook Pancakes",
+      "content": "Heat pan or griddle over medium heat. Pour batter onto hot surface and cook until bubbles form, then flip and cook until golden brown."
+    }
+  ],
+
+  "timings": [
+    { "title": "prep", "value": 10 },
+    { "title": "cook", "value": 15 },
+    { "title": "total", "value": 25 }
+  ],
+
+  "servings": 4,
+
+  "tags": [
+    "breakfast", "comfort", "quick"
+  ],
+
+  "notes": [
+    "Half and half is recommended for richer pancakes.",
+    "Fold in chocolate chips, berries, or nuts for variety."
+  ],
+
+  "difficulty": "easy"
+}
