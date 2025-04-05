@@ -12,7 +12,7 @@ As the project grows, I will establish dedicated channels for distribution to pr
 ## Casual or Non-Technical Contributors
 You can submit recipes easily using any of the following methods:
 - [Discord](link-to-discord) Coming Soon. . .
-- [Email](link-to-form) Coming Soon. . .
+- [Google Form](https://docs.google.com/forms/d/e/1FAIpQLScu0KV2Fd7LoXsHqys7_nr75Ewc_BBcSxN1QH46gMx4JKRSYg/viewform?usp=dialog)
 - [Website](link-to-website) Coming Soon. . .
 
 ## Technical Contributors
