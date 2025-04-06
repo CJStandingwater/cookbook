@@ -1,5 +1,5 @@
 {
-  "$id": "schema/recipe.schema.json",
+  "$id": "file://./schema/recipe.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Recipe",
   "type": "object",
@@ -94,7 +94,7 @@
     "tags": {
       "type": "array",
       "items": {
-        "$ref": "./tags.flattened.json"
+        "$ref": "file://./schema/tags.flattened.json"
       }
     },
 
