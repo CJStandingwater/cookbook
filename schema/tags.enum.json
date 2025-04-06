@@ -1,0 +1,97 @@
+{
+  "mealtime": [
+    "breakfast",
+    "lunch",
+    "dinner",
+    "snack",
+    "dessert",
+    "brunch",
+    "late-night",
+    "appetizer",
+    "side",
+    "weeknight"
+  ],
+  "seasonal": [
+    "fall",
+    "winter",
+    "spring",
+    "summer",
+    "holiday" 
+  ],
+  "thematic": [
+    "comfort",
+    "romantic",
+    "hearty",
+    "elegant",
+    "light",
+    "indulgent",
+    "festive"
+  ],
+  "dietary": [
+    "vegan",
+    "vegetarian",
+    "gluten-free",
+    "high-fiber",
+    "high-protein",
+    "low-carb",
+    "low-fat",
+    "dairy-free",
+    "nut-free",
+    "paleo",
+    "keto",
+    "diabetic-friendly",
+    "low-sodium"
+  ],
+  "effort": [
+    "quick",
+    "slow-cook",
+    "no-cook",
+    "5-ingredients",
+    "one-pot"
+  ],
+  "cuisine": [
+    "american",
+    "italian",
+    "mexican",
+    "indian",
+    "japanese",
+    "greek",
+    "mediterranean",
+    "chinese",
+    "thai",
+    "french",
+    "fillipino",
+    "middle-eastern",
+    "fusion"
+  ],
+  "food-type": [
+    "smoothie",
+    "soup",
+    "stew",
+    "salad",
+    "bread",
+    "cookie",
+    "cake",
+    "pasta",
+    "pizza",
+    "sandwich",
+    "drink",
+    "sauce",
+    "dressing",
+    "spread",
+    "dip",
+    "wrap",
+    "rice",
+    "pancake"
+  ],
+  "utility": [
+    "meal-prep",
+    "freezer-friendly",
+    "batch",
+    "budget",
+    "kid-friendly",
+    "camping",
+    "leftovers",
+    "potluck"
+  ]
+}
