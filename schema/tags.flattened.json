@@ -1,5 +1,5 @@
 {
-  "$id": "tags.flattened.json",
+  "$id": "schema/tags.flattened.json",
   "type": "array",
   "items": {
     "type": "string",
