@@ -1,5 +1,5 @@
 {
-  "title": "Western Omelette",
+  "title": "Western Omelet",
   "author": "Admin",
   "ingredients": [
     {
@@ -85,10 +85,10 @@
     },
     {
       "title": "Serve",
-      "content": "Serve the omelette immediately.",
+      "content": "Serve the omelet immediately.",
       "notes": [
-        "The omelette might cook better if you cover with a lid before removing from heat.",
-        "If making several in a row before serving, transfer to a baking pan instead of allowing the omelette to rest for a minute, and store in a warm oven."
+        "The omelet might cook better if you cover with a lid before removing from heat.",
+        "If making several in a row before serving, transfer to a baking pan instead of allowing the omelet to rest for a minute, and store in a warm oven."
       ]
     }
   ]
