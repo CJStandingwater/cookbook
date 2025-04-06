@@ -93,14 +93,7 @@
     "tags": {
       "type": "array",
       "items": {
-        "type": "string",
-        "enum": [
-          "breakfast", "lunch", "dinner", "snack", "dessert",
-          "smoothie", "vegan", "vegetarian", "gluten-free",
-          "high-fiber", "high-protein", "low-carb",
-          "fall", "winter", "spring", "summer",
-          "holiday", "comfort", "quick", "slow-cook", "fusion"
-        ]
+        "$ref": "tags.flattened.json"
       }
     },
 
