@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "schema/tags.enum.json"
+  workflow_dispatch:
 jobs:
   flatten-tags:
     runs-on: ubuntu-latest
