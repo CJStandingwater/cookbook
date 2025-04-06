@@ -34,6 +34,11 @@ jobs:
           for file in $changed_files; do
             if [ -f "$file" ]; then
               echo "Validating $file"
-              ajv validate --spec=draft2020 -s schema/recipe.schema.json -d "$file" || exit 1
+              ajv validate \
+                --spec=draft2020 \
+                -s schema/recipe.schema.json \
+                -r schema/tags.flattened.json \
+                -d "$file" \
+               || exit 1
             fi
           done
