@@ -94,7 +94,7 @@
     "tags": {
       "type": "array",
       "items": {
-        "$ref": "tags.flattened.json"
+        "$ref": "./tags.flattened.json"
       }
     },
 
