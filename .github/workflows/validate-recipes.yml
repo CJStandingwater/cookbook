@@ -1,0 +1,39 @@
+name: Validate Changed Recipes
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - 'recipes/**/*.json'
+      - 'schema/recipe.schema.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install AJV CLI
+        run: npm install -g ajv-cli@5.0.0
+
+      - name: Validate changed recipe files only
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          changed_files=$(git diff --name-only origin/${{ github.base_ref }} -- 'recipes/*.json')
+          if [ -z "$changed_files" ]; then
+            echo "No changed recipes to validate."
+            exit 0
+          fi
+          for file in $changed_files; do
+            if [ -f "$file" ]; then
+              echo "Validating $file"
+              ajv validate --spec=draft2020 -s schema/recipe.schema.json -d "$file" || exit 1
+            fi
+          done
