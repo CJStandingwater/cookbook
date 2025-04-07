@@ -62,7 +62,7 @@
         "properties": {
           "title": { "type": "string" },
           "content": { "type": "string" },
-          "note": {
+          "notes": {
             "type": "array",
             "items": { "type": "string" }
           }
