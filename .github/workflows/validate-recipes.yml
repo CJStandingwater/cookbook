@@ -15,9 +15,8 @@ jobs:
       - name: Check if any recipe files were modified
         id: check_changes
         run: |
-          git fetch origin
-          base=$(git merge-base HEAD origin/main)
-          changed_files=$(git diff --name-only $base HEAD -- 'recipes/**/*.json' 'schema/recipe.schema.json')
+          git fetch origin ${{ github.base_ref }}
+          changed_files=$(git diff --name-only origin/${{ github.base_ref }} -- 'recipes/**/*.json' 'schema/recipe.schema.json')
           echo "CHANGED_FILES<<EOF" >> $GITHUB_ENV
           echo "$changed_files" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
@@ -33,7 +32,9 @@ jobs:
 
       - name: Skip validation if no recipe files changed
         if: steps.check_changes.outputs.should_run == 'false'
-        run: echo "Skipping validation."
+        run: |
+          echo "Skipping validation."
+          exit 0
 
       - name: Set up Node.js
         if: steps.check_changes.outputs.should_run == 'true'
@@ -58,3 +59,4 @@ jobs:
                 -d "$file" || exit 1
             fi
           done
+          exit 0
