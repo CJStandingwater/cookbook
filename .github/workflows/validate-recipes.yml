@@ -3,9 +3,6 @@ name: Validate Changed Recipes
 on:
   pull_request:
     types: [opened, synchronize]
-    paths:
-      - 'recipes/**/*.json'
-      - 'schema/recipe.schema.json'
 
 jobs:
   validate:
@@ -15,30 +12,48 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
+      - name: Check if any recipe files were modified
+        id: check_changes
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          changed_files=$(git diff --name-only origin/${{ github.base_ref }} -- 'recipes/**/*.json' 'schema/recipe.schema.json')
+          echo "CHANGED_FILES<<EOF" >> $GITHUB_ENV
+          echo "$changed_files" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+          if [ -z "$changed_files" ]; then
+            echo "No recipe-related changes found."
+            echo "should_run=false" >> $GITHUB_OUTPUT
+          else
+            echo "Recipe-related changes detected:"
+            echo "$changed_files"
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Skip validation if no recipe files changed
+        if: steps.check_changes.outputs.should_run == 'false'
+        run: echo "Skipping validation."
+
       - name: Set up Node.js
+        if: steps.check_changes.outputs.should_run == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
       - name: Install AJV CLI
+        if: steps.check_changes.outputs.should_run == 'true'
         run: npm install -g ajv-cli@5.0.0
 
-      - name: Validate changed recipe files only
+      - name: Validate changed recipe files
+        if: steps.check_changes.outputs.should_run == 'true'
         run: |
-          git fetch origin ${{ github.base_ref }}
-          changed_files=$(git diff --name-only origin/${{ github.base_ref }} -- 'recipes/*.json')
-          if [ -z "$changed_files" ]; then
-            echo "No changed recipes to validate."
-            exit 0
-          fi
-          for file in $changed_files; do
+          for file in $CHANGED_FILES; do
             if [ -f "$file" ]; then
               echo "Validating $file"
               ajv validate \
                 --spec=draft2020 \
                 -s schema/recipe.schema.json \
                 -r schema/tags.flattened.json \
-                -d "$file" \
-               || exit 1
+                -d "$file" || exit 1
             fi
           done
