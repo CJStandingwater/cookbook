@@ -1,0 +1,95 @@
+{
+  "title": "Western Omelet",
+  "author": "Admin",
+  "ingredients": [
+    {
+      "section": "Filler",
+      "items": [
+        {
+          "item": "Unsalted Butter",
+          "amount": 2,
+          "unit": "tbsp",
+          "note": "Divided"
+        },
+        {
+          "item": "Red Bell Pepper",
+          "amount": 0.25,
+          "unit": "cup",
+          "note": "Diced"
+        },
+        {
+          "item": "Green Bell Pepper",
+          "amount": 0.25,
+          "unit": "cup",
+          "note": "Diced"
+        },
+        {
+          "item": "Yellow Onion",
+          "amount": 0.25,
+          "unit": "cup",
+          "note": "Diced"
+        },
+        {
+          "item": "Scallion",
+          "amount": 1,
+          "note": "Thinly sliced"
+        },
+        {
+          "item": "Deli Ham",
+          "amount": 2,
+          "unit": "slices",
+          "note": "chopped"
+        },
+        {
+          "item": "Black Pepper",
+          "amount": 1,
+          "unit": "pinch",
+          "note": "Freshly ground"
+        },
+        {
+          "item": "Pepper Jack Cheese",
+          "amount": 0.25,
+          "unit": "cup",
+          "note": "Shredded"
+        }
+      ]
+    },
+    {
+      "section": "Egg Mix",
+      "items": [
+        {
+          "item": "Eggs",
+          "amount": 3,
+          "unit": "Large"
+        },
+        {
+          "item": "Salt",
+          "amount": 0.25,
+          "unit": "tsp"
+        }
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Saute Filler",
+      "content": "Melt 1 tablespoon of the butter in a non-stick skillet over medium heat. Add the bell peppers and onions and saute until softened. Add the ham, scallion, and black pepper. Cook for a 1-2 minutes and transfer the mixture. Clean the skillet."
+    },
+    {
+      "title": "Egg Mix",
+      "content": "Whisk together the eggs and salt while the skillet reheats."
+    },
+    {
+      "title": "Assemble",
+      "content": "Coat the skillet with the remaining 1 tablespoon of butter. Pour in the egg, and use a rubber spatula to gently tuck the edges of the egg inward. When the egg is half cooked, add the filler and cheese to half of the egg, and fold the empty half of the egg over the filling. Remove from heat and rest for 1 minute."
+    },
+    {
+      "title": "Serve",
+      "content": "Serve the omelet immediately.",
+      "notes": [
+        "The omelet might cook better if you cover with a lid before removing from heat.",
+        "If making several in a row before serving, transfer to a baking pan instead of allowing the omelet to rest for a minute, and store in a warm oven."
+      ]
+    }
+  ]
+}
