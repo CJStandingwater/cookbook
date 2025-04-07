@@ -1,0 +1,44 @@
+{
+  "title": "Fails Structure",
+  "author": "Test",
+  "co-author": "Test.b"
+  "ingredients": [
+    {
+      "section": "First",
+      "items": [
+        {
+          "item": "example",
+          "amount": 1
+        },
+        {
+          "item": "Another example",
+          "amount": 250,
+          "unit": "ml"
+        }
+      ]
+    },
+    {
+      "section": "Second",
+      "items": [
+        {
+          "item": "Final example",
+          "amount": 15,
+          "unit": "ml"
+        }
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Do Something",
+      "content": "Something that you do."
+    },
+    {
+      "title": "Do Another Thing",
+      "content": "Another thing that you do."
+    }
+    "tags": [
+      "comfort", "weekend"
+    ]
+  ]
+}
