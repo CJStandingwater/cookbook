@@ -1,0 +1,80 @@
+{
+    "title": "Brazilian Brigadeiro",
+    "author": "Dincrivel",
+  
+    "ingredients": [
+      {
+        "section": "Wet Ingredients",
+        "items": [
+          {
+            "item": "condensed milk",
+            "amount": 1,
+            "unit": "box",
+            "alt_amount": 395,
+            "alt_unit": "grams"
+          },
+          {
+            "item": "butter",
+            "amount": 1,
+            "unit": "tbsp",
+            "alt_amount": 60,
+            "alt_unit": "grams"
+          }
+        ]
+      },
+      {
+        "section": "Dry Ingredients",
+        "items": [
+          {
+            "item": "chocolate powder",
+            "amount": 2,
+            "unit": "tbsp",
+            "alt_amount": 60,
+            "alt_unit": "grams"
+          }
+        ]
+      }
+    ],
+  
+    "instructions": [
+      {
+        "title": "Mixing",
+        "content": "In a pan, mix the condensed milk, chocolate powder, and butter.",
+        "note": [
+          "Mix until it gets homogenous, you can start this and while it is getting good combine the next instruction"
+        ]
+      },
+      {
+        "title": "Heating",
+        "content": "Cook over medium heat, stirring constantly, until the mixture thickens and starts to pull away from the bottom of the pan (about 10–15 minutes).",
+        "note": [
+          "Don't stop stirring until it stops sticking to the bottom of the pan"
+        ]
+      },
+      {
+        "title": "Letting cool",
+        "content": "Remove from heat an let it cool",
+        "note": [
+          "So it don't burns your mouth"
+        ]
+      }
+    ],
+  
+    "timings": [
+      { "title": "prep", "value": 5 },
+      { "title": "cook", "value": 15 },
+      { "title": "total", "value": 20 }
+    ],
+  
+    "servings": 2,
+  
+    "tags": [
+      "desert", "comfort", "quick"
+    ],
+  
+    "notes": [
+      "Add some toppings, alone still amazing but why don't try to improve it: milk powder, chocolate sprinkles or oreos are my top 3"
+    ],
+  
+    "difficulty": "easy"
+  }
