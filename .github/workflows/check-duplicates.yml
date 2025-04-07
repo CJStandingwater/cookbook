@@ -1,0 +1,38 @@
+name: Ingredient Hash Duplicate Check
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - 'recipes/**/*.json'
+      - 'scripts/check-duplicates.js'
+      - 'data/ingredient-hashes.json'
+
+jobs:
+  check-duplicates:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install ajv
+
+      - name: Get changed recipe files
+        id: changes
+        run: |
+          echo "CHANGED_FILES<<EOF" >> $GITHUB_ENV
+          git fetch origin ${{ github.base_ref }}
+          git diff --name-only origin/${{ github.base_ref }} -- 'recipes/*.json' >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Run duplicate check
+        run: node scripts/check-duplicates.js
+        env:
+          CHANGED_FILES: ${{ env.CHANGED_FILES }}
