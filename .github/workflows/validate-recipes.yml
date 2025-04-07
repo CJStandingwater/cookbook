@@ -36,7 +36,7 @@ jobs:
               echo "Validating $file"
               ajv validate \
                 --spec=draft2020 \
-                -s schema/recipe.schema.json \
+                -s recipe.schema.json \
                 -r schema/tags.flattened.json \
                 -d "$file" \
                || exit 1
