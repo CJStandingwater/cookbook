@@ -16,7 +16,7 @@ jobs:
         id: check_changes
         run: |
           git fetch origin ${{ github.base_ref }}
-          changed_files=$(git diff --name-only origin/${{ github.base_ref }} -- 'recipes/**/*.json' 'schema/recipe.schema.json')
+          changed_files=$(git diff --name-only --diff-filter=ACMRT origin/${{ github.base_ref }} -- 'recipes/**/*.json' 'schema/recipe.schema.json')
           echo "CHANGED_FILES<<EOF" >> $GITHUB_ENV
           echo "$changed_files" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
