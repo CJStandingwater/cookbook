@@ -93,7 +93,7 @@
     "tags": {
       "type": "array",
       "items": {
-        "$ref": "schema/tags.flattened.json"
+        "$ref": "tags.flattened.json"
       }
     },
 
