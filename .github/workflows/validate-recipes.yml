@@ -11,16 +11,20 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
-      - name: Fetch main
-        run: git fetch origin main
+      - name: Fetch base and head refs
+        run: |
+          git fetch origin main ${{ github.event.pull_request.head.ref }}
 
       - name: Check if any recipe files were modified
         id: check_changes
         run: |
-          changed_files=$(git diff --name-only origin/main..HEAD -- 'recipes/**/*.json' 'schema/recipe.schema.json')
+          changed_files=$(git diff --name-only origin/main..origin/${{ github.event.pull_request.head.ref }} -- 'recipes/**/*.json' 'schema/recipe.schema.json')
+
+          echo "Comparing origin/main to origin/${{ github.event.pull_request.head.ref }}"
+          echo "Changed files:"
+          echo "$changed_files"
+
           echo "CHANGED_FILES<<EOF" >> $GITHUB_ENV
           echo "$changed_files" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
@@ -29,8 +33,7 @@ jobs:
             echo "No recipe-related changes found."
             echo "should_run=false" >> $GITHUB_OUTPUT
           else
-            echo "Recipe-related changes detected:"
-            echo "$changed_files"
+            echo "Recipe-related changes detected."
             echo "should_run=true" >> $GITHUB_OUTPUT
           fi
 
