@@ -2,7 +2,7 @@
   "title": "Fails Structure",
   "author": "Test",
   "co-author": "Test.b"
-  "ingredients": [
+  "ingredient": [
     {
       "section": "First",
       "items": [
