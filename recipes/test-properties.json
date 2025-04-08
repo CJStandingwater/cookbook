@@ -2,7 +2,7 @@
   "title": "Fails Structure",
   "author": "Test",
   "co-author": "Test.b"
-  "ingredient": [
+  "ingredients": [
     {
       "section": "First",
       "items": [
@@ -28,7 +28,7 @@
       ]
     }
   ],
-  "instructions": [
+  "instruction": [
     {
       "title": "Do Something",
       "content": "Something that you do."
