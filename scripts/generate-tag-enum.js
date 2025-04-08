@@ -9,11 +9,8 @@ const flattened = Object.values(grouped).flat();
 
 const schemaWrapper = {
   $id: "tags.flattened.json",
-  type: "array",
-  items: {
-    type: "string",
-    enum: flattened
-  }
+  type: "string",
+  enum: flattened
 };
 
 fs.writeFileSync(output, JSON.stringify(schemaWrapper, null, 2));
