@@ -20,7 +20,7 @@ jobs:
       - name: Check if any recipe files were modified
         id: check_changes
         run: |
-          changed_files=$(git diff --name-only origin/main...HEAD -- 'recipes/**/*.json' 'schema/recipe.schema.json')
+          changed_files=$(git diff --name-only origin/main..HEAD -- 'recipes/**/*.json' 'schema/recipe.schema.json')
           echo "CHANGED_FILES<<EOF" >> $GITHUB_ENV
           echo "$changed_files" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
