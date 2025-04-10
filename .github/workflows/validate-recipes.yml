@@ -1,49 +1,69 @@
-- name: Check if any recipe files were modified
-  id: check_changes
-  run: |
-    changed_files=$(git diff --name-only origin/main...${GITHUB_SHA} -- 'recipes/**/*.json')
-    
-    echo "Comparing origin/main to ${GITHUB_SHA}"
-    echo "Changed recipe files:"
-    echo "$changed_files"
-    
-    if [ -z "$changed_files" ]; then
-      echo "No recipe-related changes found. Exiting."
-      echo "should_run=false" >> $GITHUB_OUTPUT
-      exit 0
-    else
-      echo "Recipe-related changes detected."
-      echo "CHANGED_FILES<<EOF" >> $GITHUB_ENV
-      echo "$changed_files" >> $GITHUB_ENV
-      echo "EOF" >> $GITHUB_ENV
-      echo "should_run=true" >> $GITHUB_OUTPUT
-    fi
+name: Validate Changed Recipes
 
-- name: Skip validation if no recipe files changed
-  if: steps.check_changes.outputs.should_run == 'false'
-  run: |
-    echo "No recipe changes detected; skipping validation."
-    exit 0
+on:
+  pull_request:
+    types: [opened, synchronize]
 
-- name: Set up Node.js
-  if: steps.check_changes.outputs.should_run == 'true'
-  uses: actions/setup-node@v3
-  with:
-    node-version: 18
+jobs:
+  validate:
+    runs-on: ubuntu-latest
 
-- name: Install AJV CLI
-  if: steps.check_changes.outputs.should_run == 'true'
-  run: npm install -g ajv-cli@5.0.0
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-- name: Validate changed recipe files
-  if: steps.check_changes.outputs.should_run == 'true'
-  run: |
-    while IFS= read -r file; do
-      if [ -f "$file" ]; then
-        echo "Validating $file"
-        ajv validate --spec=draft2020 -s schema/recipe.schema.json -r schema/tags.flattened.json -d "$file" || exit 1
-      else
-        echo "File not found (skipped): $file"
-      fi
-    done <<< "$CHANGED_FILES"
-    echo "All detected files passed validation."
+      - name: Fetch base and head refs
+        run: |
+          git fetch origin main ${{ github.event.pull_request.head.ref }}
+
+      - name: Check if any recipe files were modified
+        id: check_changes
+        run: |
+          changed_files=$(git diff --name-only origin/main...${GITHUB_SHA} -- 'recipes/**/*.json')
+          echo "Comparing origin/main to ${GITHUB_SHA}"
+          echo "Changed recipe files:"
+          echo "$changed_files"
+
+          if [ -z "$changed_files" ]; then
+            echo "No recipe-related changes found. Exiting with success."
+            echo "should_run=false" >> $GITHUB_OUTPUT
+            exit 0
+          else
+            echo "Recipe-related changes detected."
+            echo "CHANGED_FILES<<EOF" >> $GITHUB_ENV
+            echo "$changed_files" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Skip validation if no recipe files changed
+        if: steps.check_changes.outputs.should_run == 'false'
+        run: |
+          echo "No recipe changes detected; skipping validation."
+          exit 0
+
+      - name: Set up Node.js
+        if: steps.check_changes.outputs.should_run == 'true'
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install AJV CLI
+        if: steps.check_changes.outputs.should_run == 'true'
+        run: npm install -g ajv-cli@5.0.0
+
+      - name: Validate changed recipe files
+        if: steps.check_changes.outputs.should_run == 'true'
+        run: |
+          echo "Validating changed recipe files..."
+          while IFS= read -r file; do
+            if [ -f "$file" ]; then
+              echo "Validating $file"
+              ajv validate --spec=draft2020 -s schema/recipe.schema.json -r schema/tags.flattened.json -d "$file" || exit 1
+            else
+              echo "File not found (skipped): $file"
+            fi
+          done <<< "$CHANGED_FILES"
+          echo "All detected files passed validation."
