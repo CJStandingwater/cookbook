@@ -34,7 +34,7 @@
     {
       "title": "Do Thing",
       "content": "This should tell someone how to 'Do Thing'",
-      "note": [
+      "notes": [
         "A note should define a single concept pertaining to the current step.",
         "Add as many as needed."
       ]
