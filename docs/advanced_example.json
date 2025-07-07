@@ -29,7 +29,7 @@
     {
       "title": "Step Title",
       "content": "Clear instructions describing the actions to complete this step.",
-      "note": [
+      "notes": [
         "A brief note or substitution relevant to this step (Optional).",
         "Additional notes can be added as needed."
       ]
