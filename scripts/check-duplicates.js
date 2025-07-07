@@ -26,40 +26,44 @@ function hashIngredients(ingredients) {
   return hash;
 }
 
-// Get changed recipe files
-const recipeDir = path.join(__dirname, "../recipes");
-const changedFiles = process.env.CHANGED_FILES ? process.env.CHANGED_FILES.split("\n") : [];
+if (require.main === module) {
+  // Get changed recipe files
+  const recipeDir = path.join(__dirname, "../recipes");
+  const changedFiles = process.env.CHANGED_FILES ? process.env.CHANGED_FILES.split("\n") : [];
 
-let duplicatesFound = false;
+  let duplicatesFound = false;
 
-for (const file of changedFiles) {
-  const fullPath = path.join(recipeDir, file);
-  if (!fs.existsSync(fullPath)) continue;
+  for (const file of changedFiles) {
+    const fullPath = path.join(recipeDir, file);
+    if (!fs.existsSync(fullPath)) continue;
 
-  const recipe = JSON.parse(fs.readFileSync(fullPath, "utf-8"));
-  const hash = hashIngredients(recipe.ingredients);
-  const recipeName = file.replace(/^recipes\//, "");
+    const recipe = JSON.parse(fs.readFileSync(fullPath, "utf-8"));
+    const hash = hashIngredients(recipe.ingredients);
+    const recipeName = file.replace(/^recipes\//, "");
 
-  // Check if this hash already exists and file isn't already linked
-  const existing = hashMap[hash] || [];
-  const isAlreadyIncluded = existing.includes(recipeName);
+    // Check if this hash already exists and file isn't already linked
+    const existing = hashMap[hash] || [];
+    const isAlreadyIncluded = existing.includes(recipeName);
 
-  if (!isAlreadyIncluded && existing.length > 0 && !recipeName.includes("#allow-dupe")) {
-    console.warn(`Possible duplicate detected for ${recipeName}:`);
-    console.warn(`Matches existing recipe(s): ${existing.join(", ")}`);
-    duplicatesFound = true;
+    if (!isAlreadyIncluded && existing.length > 0 && !recipeName.includes("#allow-dupe")) {
+      console.warn(`Possible duplicate detected for ${recipeName}:`);
+      console.warn(`Matches existing recipe(s): ${existing.join(", ")}`);
+      duplicatesFound = true;
+    }
+
+    if (!isAlreadyIncluded && !duplicatesFound) {
+      if (!hashMap[hash]) hashMap[hash] = [];
+      hashMap[hash].push(recipeName);
+    }
   }
 
-  if (!isAlreadyIncluded && !duplicatesFound) {
-    if (!hashMap[hash]) hashMap[hash] = [];
-    hashMap[hash].push(recipeName);
+  // Save updated hash map if no duplicates were found
+  if (duplicatesFound) {
+    process.exit(1);
+  } else {
+    fs.writeFileSync(hashFilePath, JSON.stringify(hashMap, null, 2));
+    console.log("Ingredient hash map updated successfully.");
   }
 }
 
-// Save updated hash map if no duplicates were found
-if (duplicatesFound) {
-  process.exit(1);
-} else {
-  fs.writeFileSync(hashFilePath, JSON.stringify(hashMap, null, 2));
-  console.log("Ingredient hash map updated successfully.");
-}
+module.exports = { hashIngredients };
