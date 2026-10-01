@@ -8,11 +8,11 @@ Each recipe must have a unique title and filename.
 
 If a similar recipe already exists, the name should identify what distinguishes the new version, such as its ingredients, preparation method, texture, flavor, or regional style.
 
-## Names must contain 3–5 words
+## Names must contain 2–5 words
 
 Recipe titles should be descriptive without becoming unnecessarily long.
 
-- Minimum: 3 words — `Chewy Oatmeal Cookies`
+- Minimum: 2 words — `Carrot Cake`
 - Maximum: 5 words — `Creamy Spicy Chickpea Lentil Soup`
 
 ## Names must identify the type of food
