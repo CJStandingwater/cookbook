@@ -1,0 +1,14 @@
+{
+	"name": "cookbook",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"generate-tags": "node scripts/generate-tags.js",
+		"validate": "node scripts/validate-recipes.js",
+		"duplicates": "node scripts/check-duplicates.js",
+		"check": "npm run generate-tags && npm run validate && npm run duplicates"
+	},
+	"dependencies": {
+		"ajv": "^8.20.0"
+	}
+}
