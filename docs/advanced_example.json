@@ -1,76 +1,127 @@
 {
-  "title": "Advanced Recipe",
+  "title": "Creamy Garlic Pasta",
   "authors": [
-    "Author name or alias"
+    "Author Name or Alias",
+    "Second Contributor"
   ],
-
   "ingredients": [
     {
-      "section": "Ingredient Section (Optional)",
+      "section": "Pasta",
       "items": [
         {
-          "item": "Ingredient Name",
-          "amount": 1.5,
-          "unit": "cups",
-          "alt_amount": 180,
-          "alt_unit": "grams",
-          "note": "Brief usage or substitution note (Optional)"
+          "item": "Dry Pasta",
+          "weight_g": 225
         },
         {
-          "item": "Another Ingredient",
-          "amount": 1,
-          "unit": "tbsp",
-          "alt_amount": 15,
-          "alt_unit": "ml"
+          "item": "Salt",
+          "weight_g": 5,
+          "note": "For the cooking water"
+        }
+      ]
+    },
+    {
+      "section": "Sauce",
+      "items": [
+        {
+          "item": "Unsalted Butter",
+          "weight_g": 28
+        },
+        {
+          "item": "Garlic",
+          "count": 3,
+          "note": "Cloves; minced"
+        },
+        {
+          "item": "Heavy Cream",
+          "volume_ml": 240,
+          "substitutes": [
+            [
+              {
+                "item": "Whole Milk",
+                "volume_ml": 180
+              },
+              {
+                "item": "Unsalted Butter",
+                "weight_g": 28
+              }
+            ]
+          ]
+        },
+        {
+          "item": "Parmesan Cheese",
+          "weight_g": 60,
+          "note": "Finely grated"
+        },
+        {
+          "item": "Fresh Parsley",
+          "weight_g": 8,
+          "optional": true,
+          "note": "Chopped"
         }
       ]
     }
   ],
-
   "instructions": [
     {
-      "title": "Step Title",
-      "content": "Clear instructions describing the actions to complete this step.",
+      "action": "boil",
+      "content": "Bring a pot of salted water to a boil and cook the pasta until tender. Reserve some of the cooking water before draining."
+    },
+    {
+      "action": "saute",
+      "content": "Melt the butter over medium heat. Add the garlic and cook briefly until fragrant.",
       "notes": [
-        "A brief note or substitution relevant to this step (Optional).",
-        "Additional notes can be added as needed."
+        "Do not allow the garlic to brown."
       ]
     },
     {
-      "title": "Next Step Title",
-      "content": "Instructions for the next part of the recipe."
+      "action": "combine",
+      "content": "Add the cream and Parmesan cheese. Stir until smooth, then add the drained pasta and enough reserved cooking water to reach the desired consistency."
+    },
+    {
+      "action": "serve",
+      "content": "Divide the pasta into servings and garnish with parsley if desired."
     }
   ],
-
   "timings": [
-    { "title": "prep", "value": 10 },
-    { "title": "cook", "value": 15 },
-    { "title": "total", "value": 25 }
+    {
+      "title": "prep",
+      "value": 10,
+      "unit": "minute"
+    },
+    {
+      "title": "cook",
+      "value": 20,
+      "unit": "minute"
+    },
+    {
+      "title": "total",
+      "value": 30,
+      "unit": "minute"
+    }
   ],
-
   "servings": 4,
-
   "tags": [
-    "breakfast", "lunch", "dinner"
+    "dinner",
+    "comfort",
+    "vegetarian",
+    "quick",
+    "pasta"
   ],
-
   "notes": [
-    "General notes or tips about the recipe."
+    "Reserved pasta water can be used to thin the sauce without making it watery."
   ],
-
   "nutrition": {
-    "calories": 320,
-    "protein": 8,
-    "fat": 12,
-    "carbohydrates": 42,
-    "fiber": 2
+    "calories": 520,
+    "protein": 16,
+    "fat": 27,
+    "carbohydrates": 54,
+    "fiber": 3
   },
-
-  "variations": [
-    "Possible recipe variations or ingredient swaps."
+  "source": "Original source or inspiration for this recipe",
+  "tools": [
+    "Large Pot",
+    "Skillet",
+    "Colander"
   ],
-
-  "source": "Original source or inspiration for this recipe (Optional)",
-  "tools": ["tool 1", "tool 2", "etc."],
   "difficulty": "moderate"
 }

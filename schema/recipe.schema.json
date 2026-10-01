@@ -2,15 +2,24 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Recipe",
   "type": "object",
-  "required": ["title", "authors", "ingredients", "instructions"],
+
+  "required": [
+    "title",
+    "authors",
+    "ingredients",
+    "instructions"
+  ],
+
   "properties": {
     "title": {
       "type": "string",
       "minLength": 1
     },
+
     "authors": {
       "type": "array",
       "minItems": 1,
+      "uniqueItems": true,
       "items": {
         "type": "string",
         "minLength": 1
@@ -19,62 +28,90 @@
 
     "ingredients": {
       "type": "array",
+      "minItems": 1,
       "items": {
         "type": "object",
+        "required": [
+          "items"
+        ],
         "properties": {
-          "section": { "type": "string" },
+          "section": {
+            "type": "string",
+            "minLength": 1
+          },
+
           "items": {
             "type": "array",
+            "minItems": 1,
             "items": {
-              "type": "object",
-              "required": ["item", "amount"],
-              "properties": {
-                "item": { "type": "string" },
-                "amount": { "type": "number" },
-                "unit": { "type": "string" },
-                "alt_amount": { "type": "number" },
-                "alt_unit": { "type": "string" },
-                "note": { "type": "string" },
-                "substitutes": {
-                  "type": "array",
-                  "items": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "required": ["item", "amount"],
-                      "properties": {
-                        "item": { "type": "string" },
-                        "amount": { "type": "number" },
-                        "unit": { "type": "string" },
-                        "alt_amount": { "type": "number" },
-                        "alt_unit": { "type": "string" },
-                        "note": { "type": "string" }
-                      },
-                      "additionalProperties": false
-                    }
-                  }
-                }
-              },
-              "additionalProperties": false
+              "$ref": "#/$defs/ingredient"
             }
           }
         },
-        "required": ["items"],
         "additionalProperties": false
       }
     },
 
     "instructions": {
       "type": "array",
+      "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["title", "content"],
+        "required": [
+          "action",
+          "content"
+        ],
         "properties": {
-          "title": { "type": "string" },
-          "content": { "type": "string" },
+          "action": {
+            "type": "string",
+            "enum": [
+              "assemble",
+              "bake",
+              "beat",
+              "blend",
+              "boil",
+              "broil",
+              "chill",
+              "chop",
+              "combine",
+              "cool",
+              "cut",
+              "fold",
+              "fry",
+              "garnish",
+              "grill",
+              "knead",
+              "marinate",
+              "melt",
+              "mix",
+              "preheat",
+              "proof",
+              "reduce",
+              "rest",
+              "roast",
+              "saute",
+              "season",
+              "serve",
+              "simmer",
+              "steam",
+              "stir",
+              "toast",
+              "whisk"
+            ]
+          },
+
+          "content": {
+            "type": "string",
+            "minLength": 1
+          },
+
           "notes": {
             "type": "array",
-            "items": { "type": "string" }
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
           }
         },
         "additionalProperties": false
@@ -83,25 +120,44 @@
 
     "timings": {
       "type": "array",
+      "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["title", "value"],
+        "required": [
+          "title",
+          "value",
+          "unit"
+        ],
         "properties": {
-          "title": { "type": "string" },
-          "value": { "type": "number" },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+
+          "value": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+
           "unit": {
             "type": "string",
-            "enum": ["minutes", "minute", "hours", "hour"]
+            "enum": [
+              "minute"
+            ]
           }
         },
         "additionalProperties": false
       }
     },
 
-    "servings": { "type": "number" },
+    "servings": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
 
     "tags": {
       "type": "array",
+      "uniqueItems": true,
       "items": {
         "$ref": "tags.flattened.json"
       }
@@ -109,37 +165,195 @@
 
     "notes": {
       "type": "array",
-      "items": { "type": "string" }
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
     },
 
     "nutrition": {
       "type": "object",
       "properties": {
-        "calories": { "type": "number" },
-        "protein": { "type": "number" },
-        "fat": { "type": "number" },
-        "carbohydrates": { "type": "number" },
-        "fiber": { "type": "number" }
+        "calories": {
+          "type": "number",
+          "minimum": 0
+        },
+        "protein": {
+          "type": "number",
+          "minimum": 0
+        },
+        "fat": {
+          "type": "number",
+          "minimum": 0
+        },
+        "carbohydrates": {
+          "type": "number",
+          "minimum": 0
+        },
+        "fiber": {
+          "type": "number",
+          "minimum": 0
+        }
       },
       "additionalProperties": false
     },
 
-    "variations": {
-      "type": "array",
-      "items": { "type": "string" }
+    "source": {
+      "type": "string",
+      "minLength": 1
     },
-
-    "source": { "type": "string" },
 
     "tools": {
       "type": "array",
-      "items": { "type": "string" }
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
     },
 
     "difficulty": {
       "type": "string",
-      "enum": ["easy", "moderate", "hard"]
+      "enum": [
+        "easy",
+        "moderate",
+        "hard"
+      ]
     }
   },
+
+  "$defs": {
+    "ingredient": {
+      "type": "object",
+
+      "required": [
+        "item"
+      ],
+
+      "properties": {
+        "item": {
+          "type": "string",
+          "minLength": 1
+        },
+
+        "volume_ml": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+
+        "weight_g": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+
+        "count": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+
+        "optional": {
+          "type": "boolean"
+        },
+
+        "note": {
+          "type": "string",
+          "minLength": 1
+        },
+
+        "substitutes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/substituteIngredient"
+            }
+          }
+        }
+      },
+
+      "anyOf": [
+        {
+          "required": [
+            "volume_ml"
+          ]
+        },
+        {
+          "required": [
+            "weight_g"
+          ]
+        },
+        {
+          "required": [
+            "count"
+          ]
+        }
+      ],
+
+      "additionalProperties": false
+    },
+
+    "substituteIngredient": {
+      "type": "object",
+
+      "required": [
+        "item"
+      ],
+
+      "properties": {
+        "item": {
+          "type": "string",
+          "minLength": 1
+        },
+
+        "volume_ml": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+
+        "weight_g": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+
+        "count": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+
+        "optional": {
+          "type": "boolean"
+        },
+
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+
+      "anyOf": [
+        {
+          "required": [
+            "volume_ml"
+          ]
+        },
+        {
+          "required": [
+            "weight_g"
+          ]
+        },
+        {
+          "required": [
+            "count"
+          ]
+        }
+      ],
+
+      "additionalProperties": false
+    }
+  },
+
   "additionalProperties": false
 }

@@ -1,45 +1,31 @@
 {
-  "title": "Basic Recipe",
+  "title": "Simple Buttered Toast",
   "authors": [
-    "Author name or alias"
+    "Author Name or Alias"
   ],
-
   "ingredients": [
     {
       "items": [
         {
-          "item": "something",
-          "amount": 1,
-          "unit": "",
-          "alt_amount": 60,
-          "alt_unit": "grams"
+          "item": "Bread",
+          "count": 2,
+          "note": "Slices"
         },
         {
-          "item": "something else",
-          "amount": 1,
-          "unit": "",
-          "alt_amount": 120,
-          "alt_unit": "grams"
-        },
-        {
-          "item": "another thing",
-          "amount": 1,
-          "unit": "tbsp",
-          "alt_amount": 15,
-          "alt_unit": "ml"
+          "item": "Unsalted Butter",
+          "weight_g": 14
         }
       ]
     }
   ],
-
   "instructions": [
     {
-      "title": "Do Thing",
-      "content": "This should tell someone how to 'Do Thing'",
-      "notes": [
-        "A note should define a single concept pertaining to the current step.",
-        "Add as many as needed."
-      ]
+      "action": "toast",
+      "content": "Toast the bread until it reaches the desired level of browning."
+    },
+    {
+      "action": "assemble",
+      "content": "Spread the butter evenly over the warm toast."
     }
   ]
 }
