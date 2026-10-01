@@ -238,6 +238,7 @@ The `action` field must contain one of the following values:
 - `cool`
 - `cut`
 - `fold`
+- `frost`
 - `fry`
 - `garnish`
 - `grill`

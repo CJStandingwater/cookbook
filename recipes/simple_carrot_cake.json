@@ -1,0 +1,182 @@
+{
+  "title": "Simple Carrot Cake",
+  "authors": [
+    "LouAnn Jensen"
+  ],
+  "ingredients": [
+    {
+      "section": "Cake",
+      "items": [
+        {
+          "item": "Flour",
+          "volume_ml": 354.882
+        },
+        {
+          "item": "Sugar",
+          "volume_ml": 295.735
+        },
+        {
+          "item": "Baking Soda",
+          "volume_ml": 7.393
+        },
+        {
+          "item": "Cinnamon",
+          "volume_ml": 7.393
+        },
+        {
+          "item": "Salt",
+          "volume_ml": 1.232
+        },
+        {
+          "item": "Carrot Puree",
+          "weight_g": 255.146,
+          "note": "The original recipe called for two 4.5 oz jars of strained carrots (9 oz total). The modern equivalent is jarred baby food carrot puree, which is now commonly sold in 4 oz jars. You will need 9 oz total, so buy three 4 oz jars and weigh out the correct amount, or make your own fresh carrot puree."
+        },
+        {
+          "item": "Vegetable Oil",
+          "volume_ml": 156.148,
+          "note": "The original recipe did not specify the oil used. It is assumed any neutral cooking oil will work."
+        },
+        {
+          "item": "Eggs",
+          "count": 2
+        },
+        {
+          "item": "Vanilla Extract",
+          "volume_ml": 1.232
+        },
+        {
+          "item": "Crushed Pineapple",
+          "weight_g": 226.796,
+          "note": "Drain excess liquid from the pineapple."
+        },
+        {
+          "item": "Shredded Coconut",
+          "volume_ml": 156.148,
+          "optional": true
+        },
+        {
+          "item": "Chopped Nuts",
+          "volume_ml": 118.294,
+          "optional": true,
+          "note": "The original recipe did not specify what type of nut, but walnuts or pecans will work best."
+        }
+      ]
+    },
+    {
+      "section": "Cream Cheese Frosting",
+      "items": [
+        {
+          "item": "Cream Cheese",
+          "weight_g": 85.049
+        },
+        {
+          "item": "Margarine",
+          "volume_ml": 59.147,
+          "substitutes": [
+            [
+              {
+                "item": "Butter",
+                "volume_ml": 59.147
+              }
+            ]
+          ]
+        },
+        {
+          "item": "Vanilla Extract",
+          "volume_ml": 2.464
+        },
+        {
+          "item": "Powdered Sugar",
+          "volume_ml": 473.176,
+          "note": "Sifted"
+        }
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "action": "preheat",
+      "content": "Preheat the oven to 350 degrees Fahrenheit."
+    },
+    {
+      "action": "mix",
+      "content": "In a medium mixing bowl, mix Flour, Sugar, Baking Soda, Cinnamon, and Salt."
+    },
+    {
+      "action": "whisk",
+      "content": "Whisk in Carrot Puree, Vegetable Oil, Eggs, and Vanilla Extract."
+    },
+    {
+      "action": "fold",
+      "content": "Fold in the Crushed Pineapple, and if using, the Shredded Coconut and Chopped Nuts."
+    },
+    {
+      "action": "bake",
+      "content": "Bake at 350 degrees Fahrenheit for 30-35 minutes."
+    },
+    {
+      "action": "beat",
+      "content": "In a small bowl, beat Cream Cheese, Margarine, Vanilla Extract, and Powdered Sugar until smooth."
+    },
+    {
+      "action": "cool",
+      "content": "When done, remove the cake from the oven and cool to room temperature.",
+      "notes": [
+        "Doneness can be checked by inserting a toothpick near the center of the cake. The cake is not done if wet batter sticks to the toothpick."
+      ]
+    },
+    {
+      "action": "chill",
+      "content": "Once cooled to room temperature, chill in the refrigerator for 30-60 minutes.",
+      "notes": [
+        "Chilling before icing the cake can prevent tearing the cake."
+      ]
+    },
+    {
+      "action": "frost",
+      "content": "Once chilled, frost the cake and serve.",
+      "notes": [
+        "It is recommended to divide the cake with three cuts along the long edge, and five along the short edge."
+      ]
+    }
+  ],
+  "timings": [
+    {
+      "title": "prep",
+      "value": 15,
+      "unit": "minute"
+    },
+    {
+      "title": "bake",
+      "value": 35,
+      "unit": "minute"
+    },
+    {
+      "title": "cool",
+      "value": 120,
+      "unit": "minute"
+    },
+    {
+      "title": "chill",
+      "value": 60,
+      "unit": "minute"
+    }
+  ],
+  "servings": 24,
+  "tags": [
+    "dessert",
+    "fall",
+    "comfort",
+    "american",
+    "cake"
+  ],
+  "source": "Pantry Potpourri",
+  "tools": [
+    "9x13 Pan",
+    "Medium Mixing Bowl",
+    "Small Mixing Bowl",
+    "Whisk"
+  ],
+  "difficulty": "easy"
+}
