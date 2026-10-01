@@ -1,0 +1,44 @@
+name: Check Cookbook
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "recipes/**"
+      - "schema/**"
+      - "scripts/**"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/check.yml"
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "recipes/**"
+      - "schema/**"
+      - "scripts/**"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/check.yml"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run cookbook checks
+        run: npm run check
