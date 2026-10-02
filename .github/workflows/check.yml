@@ -15,13 +15,6 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - "recipes/**"
-      - "schema/**"
-      - "scripts/**"
-      - "package.json"
-      - "package-lock.json"
-      - ".github/workflows/check.yml"
 
 jobs:
   check:
