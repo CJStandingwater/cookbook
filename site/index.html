@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookbook Recipe Form</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="app.js"></script>
+</head>
+<body>
+    <main>
+        <h1>Cookbook Recipe Form</h1>
+
+        <form id="recipe-form">
+            <fieldset>
+                <legend>Recipe</legend>
+
+                <label for="title">Title *</label>
+                <input id="title" type="text" required>
+
+                <label for="authors">Authors *</label>
+                <input
+                    id="authors"
+                    type="text"
+                    required
+                    placeholder="John Doe, Jane Doe"
+                >
+                <p class="hint">Separate multiple authors with commas.</p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Ingredients *</legend>
+                <div id="ingredient-groups"></div>
+                <button type="button" id="add-ingredient-group">
+                    Add Ingredient Section
+                </button>
+            </fieldset>
+
+            <fieldset>
+                <legend>Instructions *</legend>
+                <div id="instructions"></div>
+                <button type="button" id="add-instruction">
+                    Add Instruction
+                </button>
+            </fieldset>
+
+            <fieldset>
+                <legend>Timings</legend>
+                <div id="timings"></div>
+                <button type="button" id="add-timing">
+                    Add Timing
+                </button>
+            </fieldset>
+
+            <fieldset>
+                <legend>Tags</legend>
+                <div id="tag-container">Loading approved tags...</div>
+                <p id="tag-error" class="error" role="alert"></p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Recipe Details</legend>
+
+                <label for="servings">Servings</label>
+                <input id="servings" type="number" min="0.001" step="any">
+
+                <label for="notes">General Notes</label>
+                <textarea
+                    id="notes"
+                    placeholder="Enter one note per line."
+                ></textarea>
+
+                <label for="source">Source</label>
+                <input id="source" type="text">
+
+                <label for="tools">Tools</label>
+                <input
+                    id="tools"
+                    type="text"
+                    placeholder="Mixing Bowl, Whisk, 9x13 Pan"
+                >
+                <p class="hint">Separate tools with commas.</p>
+
+                <label for="difficulty">Difficulty</label>
+                <select id="difficulty">
+                    <option value="">Not specified</option>
+                    <option value="easy">Easy</option>
+                    <option value="moderate">Moderate</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </fieldset>
+
+            <fieldset>
+                <legend>Nutrition</legend>
+
+                <div class="nutrition-grid">
+                    <div>
+                        <label for="calories">Calories</label>
+                        <input id="calories" type="number" min="0" step="any">
+                    </div>
+
+                    <div>
+                        <label for="protein">Protein</label>
+                        <input id="protein" type="number" min="0" step="any">
+                    </div>
+
+                    <div>
+                        <label for="fat">Fat</label>
+                        <input id="fat" type="number" min="0" step="any">
+                    </div>
+
+                    <div>
+                        <label for="carbohydrates">Carbohydrates</label>
+                        <input id="carbohydrates" type="number" min="0" step="any">
+                    </div>
+
+                    <div>
+                        <label for="fiber">Fiber</label>
+                        <input id="fiber" type="number" min="0" step="any">
+                    </div>
+                </div>
+            </fieldset>
+
+            <p id="form-error" class="error" role="alert"></p>
+
+            <button type="submit" class="primary-button">
+                Generate JSON
+            </button>
+        </form>
+
+        <section class="output-section">
+            <h2>Generated JSON</h2>
+            <textarea id="json-output" readonly></textarea>
+        </section>
+    </main>
+
+    <template id="ingredient-group-template">
+        <section class="ingredient-group">
+            <label>Section Name</label>
+            <input class="section-name" type="text" placeholder="Optional">
+
+            <div class="ingredient-items"></div>
+
+            <div class="button-row">
+                <button type="button" class="add-ingredient">
+                    Add Ingredient
+                </button>
+                <button type="button" class="remove-button remove-section">
+                    Remove Section
+                </button>
+            </div>
+        </section>
+    </template>
+
+    <template id="measurement-template">
+        <div class="measurement-grid">
+            <div>
+                <label>Volume</label>
+                <input
+                    class="volume-amount"
+                    type="number"
+                    step="any"
+                    min="0.001"
+                    placeholder="Amount"
+                >
+                <select class="volume-unit">
+                    <option value="ml">milliliter</option>
+                    <option value="l">liter</option>
+                    <option value="tsp">teaspoon</option>
+                    <option value="tbsp">tablespoon</option>
+                    <option value="floz">fluid ounce</option>
+                    <option value="cup">cup</option>
+                    <option value="pint">pint</option>
+                    <option value="quart">quart</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Weight</label>
+                <input
+                    class="weight-amount"
+                    type="number"
+                    step="any"
+                    min="0.001"
+                    placeholder="Amount"
+                >
+                <select class="weight-unit">
+                    <option value="g">gram</option>
+                    <option value="kg">kilogram</option>
+                    <option value="oz">ounce</option>
+                    <option value="lb">pound</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Count</label>
+                <input
+                    class="count-amount"
+                    type="number"
+                    step="any"
+                    min="0.001"
+                    placeholder="Amount"
+                >
+                <p class="hint">
+                    Use for eggs, fruit, cloves, slices, packages, or other counted items.
+                </p>
+            </div>
+        </div>
+    </template>
+
+    <template id="ingredient-template">
+        <article class="ingredient-item">
+            <label>Ingredient *</label>
+            <input class="ingredient-name" type="text" required>
+
+            <div class="measurement-slot"></div>
+
+            <label class="checkbox-option">
+                <input class="ingredient-optional" type="checkbox">
+                <span>Optional</span>
+            </label>
+
+            <label>Note</label>
+            <input class="ingredient-note" type="text">
+
+            <div class="substitute-sets"></div>
+
+            <div class="button-row">
+                <button type="button" class="add-substitute-set">
+                    Add Substitute Set
+                </button>
+                <button type="button" class="remove-button remove-ingredient">
+                    Remove Ingredient
+                </button>
+            </div>
+        </article>
+    </template>
+
+    <template id="substitute-set-template">
+        <section class="substitute-set">
+            <h4>Substitute Set</h4>
+            <div class="substitute-items"></div>
+
+            <div class="button-row">
+                <button type="button" class="add-substitute-item">
+                    Add Substitute Ingredient
+                </button>
+                <button type="button" class="remove-button remove-substitute-set">
+                    Remove Substitute Set
+                </button>
+            </div>
+        </section>
+    </template>
+
+    <template id="substitute-item-template">
+        <article class="substitute-item">
+            <label>Substitute Ingredient *</label>
+            <input class="substitute-name" type="text" required>
+
+            <div class="measurement-slot"></div>
+
+            <label class="checkbox-option">
+                <input class="substitute-optional" type="checkbox">
+                <span>Optional</span>
+            </label>
+
+            <label>Note</label>
+            <input class="substitute-note" type="text">
+
+            <button type="button" class="remove-button remove-substitute-item">
+                Remove Substitute Ingredient
+            </button>
+        </article>
+    </template>
+
+    <template id="instruction-template">
+        <article class="instruction">
+            <label>Action *</label>
+            <select class="instruction-action" required>
+                <option value="">Select action</option>
+            </select>
+
+            <label>Instructions *</label>
+            <textarea class="instruction-content" required></textarea>
+
+            <label>Notes</label>
+            <textarea
+                class="instruction-notes"
+                placeholder="Enter one note per line."
+            ></textarea>
+
+            <button type="button" class="remove-button remove-instruction">
+                Remove Instruction
+            </button>
+        </article>
+    </template>
+
+    <template id="timing-template">
+        <article class="timing">
+            <div class="row">
+                <div>
+                    <label>Timing Name</label>
+                    <input class="timing-title" type="text" placeholder="prep">
+                </div>
+
+                <div>
+                    <label>Amount</label>
+                    <input
+                        class="timing-value"
+                        type="number"
+                        step="any"
+                        min="0.001"
+                    >
+                </div>
+            </div>
+
+            <label>Unit</label>
+            <select class="timing-unit">
+                <option value="minute">minute</option>
+                <option value="hour">hour</option>
+            </select>
+
+            <button type="button" class="remove-button remove-timing">
+                Remove Timing
+            </button>
+        </article>
+    </template>
+</body>
+</html>
