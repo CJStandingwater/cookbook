@@ -7,3 +7,9 @@ The primary goal of this project is to build an extensive and freely accessible 
 The recipe data and releases in this repository may be used on websites, blogs, books, applications, or other distribution channels. While this project aims to provide reliable, high-quality, ad-free access to its own releases, users are free to incorporate the data into their own projects as they choose.
 
 As the collection grows, additional distribution channels may be established to make the recipe data easier to access and use.
+
+## Recipe Form
+
+Use the recipe form to create a recipe JSON:
+
+[Open Recipe Form](https://cjstandingwater.github.io/cookbook/)
