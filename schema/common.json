@@ -1,0 +1,76 @@
+{
+  "$id": "common.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "ingredient": {
+      "type": "object",
+
+      "required": [
+        "item"
+      ],
+
+      "properties": {
+        "item": {
+          "type": "string",
+          "minLength": 1
+        },
+
+        "volume_ml": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+
+        "weight_g": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+
+        "count": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+
+        "optional": {
+          "type": "boolean"
+        },
+
+        "note": {
+          "type": "string",
+          "minLength": 1
+        },
+
+        "substitutes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/ingredient"
+            }
+          }
+        }
+      },
+
+      "anyOf": [
+        {
+          "required": [
+            "volume_ml"
+          ]
+        },
+        {
+          "required": [
+            "weight_g"
+          ]
+        },
+        {
+          "required": [
+            "count"
+          ]
+        }
+      ],
+
+      "additionalProperties": false
+    }
+  }
+}

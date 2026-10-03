@@ -1,4 +1,5 @@
 {
+  "id": "3dd38c44-02d5-4e07-be7a-d73fb621940a",
   "title": "Simple Carrot Cake",
   "authors": [
     "LouAnn Jensen"
@@ -144,23 +145,19 @@
   "timings": [
     {
       "title": "prep",
-      "value": 15,
-      "unit": "minute"
+      "minutes": 15
     },
     {
       "title": "bake",
-      "value": 35,
-      "unit": "minute"
+      "minutes": 35
     },
     {
       "title": "cool",
-      "value": 120,
-      "unit": "minute"
+      "minutes": 120
     },
     {
       "title": "chill",
-      "value": 60,
-      "unit": "minute"
+      "minutes": 60
     }
   ],
   "servings": 24,

@@ -34,6 +34,7 @@ function buildNutrition() {
 
 export function buildRecipe() {
     const recipe = {
+        id: crypto.randomUUID(),
         title: normalizeWhitespace(document.getElementById("title").value),
         authors: splitCommaSeparated(document.getElementById("authors").value),
         ingredients: buildIngredients(),

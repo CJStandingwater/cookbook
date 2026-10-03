@@ -4,6 +4,7 @@
   "type": "object",
 
   "required": [
+    "id",
     "title",
     "authors",
     "ingredients",
@@ -11,6 +12,13 @@
   ],
 
   "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 36,
+      "maxLength": 36,
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+
     "title": {
       "type": "string",
       "minLength": 1
@@ -44,7 +52,7 @@
             "type": "array",
             "minItems": 1,
             "items": {
-              "$ref": "#/$defs/ingredient"
+              "$ref": "common.json#/$defs/ingredient"
             }
           }
         },
@@ -64,41 +72,7 @@
         "properties": {
           "action": {
             "type": "string",
-            "enum": [
-              "assemble",
-              "bake",
-              "beat",
-              "blend",
-              "boil",
-              "broil",
-              "chill",
-              "chop",
-              "combine",
-              "cool",
-              "cut",
-              "fold",
-              "frost",
-              "fry",
-              "garnish",
-              "grill",
-              "knead",
-              "marinate",
-              "melt",
-              "mix",
-              "preheat",
-              "proof",
-              "reduce",
-              "rest",
-              "roast",
-              "saute",
-              "season",
-              "serve",
-              "simmer",
-              "steam",
-              "stir",
-              "toast",
-              "whisk"
-            ]
+            "$ref": "actions.enum.json"
           },
 
           "content": {
@@ -126,8 +100,7 @@
         "type": "object",
         "required": [
           "title",
-          "value",
-          "unit"
+          "minutes"
         ],
         "properties": {
           "title": {
@@ -135,16 +108,9 @@
             "minLength": 1
           },
 
-          "value": {
+          "minutes": {
             "type": "number",
             "exclusiveMinimum": 0
-          },
-
-          "unit": {
-            "type": "string",
-            "enum": [
-              "minute"
-            ]
           }
         },
         "additionalProperties": false
@@ -216,143 +182,7 @@
 
     "difficulty": {
       "type": "string",
-      "enum": [
-        "easy",
-        "moderate",
-        "hard"
-      ]
-    }
-  },
-
-  "$defs": {
-    "ingredient": {
-      "type": "object",
-
-      "required": [
-        "item"
-      ],
-
-      "properties": {
-        "item": {
-          "type": "string",
-          "minLength": 1
-        },
-
-        "volume_ml": {
-          "type": "number",
-          "exclusiveMinimum": 0
-        },
-
-        "weight_g": {
-          "type": "number",
-          "exclusiveMinimum": 0
-        },
-
-        "count": {
-          "type": "number",
-          "exclusiveMinimum": 0
-        },
-
-        "optional": {
-          "type": "boolean"
-        },
-
-        "note": {
-          "type": "string",
-          "minLength": 1
-        },
-
-        "substitutes": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "type": "array",
-            "minItems": 1,
-            "items": {
-              "$ref": "#/$defs/substituteIngredient"
-            }
-          }
-        }
-      },
-
-      "anyOf": [
-        {
-          "required": [
-            "volume_ml"
-          ]
-        },
-        {
-          "required": [
-            "weight_g"
-          ]
-        },
-        {
-          "required": [
-            "count"
-          ]
-        }
-      ],
-
-      "additionalProperties": false
-    },
-
-    "substituteIngredient": {
-      "type": "object",
-
-      "required": [
-        "item"
-      ],
-
-      "properties": {
-        "item": {
-          "type": "string",
-          "minLength": 1
-        },
-
-        "volume_ml": {
-          "type": "number",
-          "exclusiveMinimum": 0
-        },
-
-        "weight_g": {
-          "type": "number",
-          "exclusiveMinimum": 0
-        },
-
-        "count": {
-          "type": "number",
-          "exclusiveMinimum": 0
-        },
-
-        "optional": {
-          "type": "boolean"
-        },
-
-        "note": {
-          "type": "string",
-          "minLength": 1
-        }
-      },
-
-      "anyOf": [
-        {
-          "required": [
-            "volume_ml"
-          ]
-        },
-        {
-          "required": [
-            "weight_g"
-          ]
-        },
-        {
-          "required": [
-            "count"
-          ]
-        }
-      ],
-
-      "additionalProperties": false
+      "$ref": "difficulty.enum.json"
     }
   },
 

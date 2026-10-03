@@ -1,0 +1,9 @@
+{
+  "$id": "difficulty.enum.json",
+  "type": "string",
+  "enum": [
+    "easy",
+    "moderate",
+    "hard"
+  ]
+}

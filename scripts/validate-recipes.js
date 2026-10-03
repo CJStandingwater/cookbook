@@ -11,6 +11,23 @@ const tagSchemaPath = path.join(
     __dirname,
     "../schema/tags.flattened.json"
 );
+const commonSchemaPath = path.join(
+    __dirname,
+    "../schema/common.json"
+);
+const actionsSchemaPath = path.join(
+    __dirname,
+    "../schema/actions.enum.json"
+);
+const toolsSchemaPath = path.join(
+    __dirname,
+    "../schema/tools.enum.json"
+);
+const difficultySchemaPath = path.join(
+    __dirname,
+    "../schema/difficulty.enum.json"
+);
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function readJson(filePath) {
     const content = fs.readFileSync(filePath, "utf8");
@@ -22,13 +39,46 @@ function formatError(error) {
     return `  ${location}: ${error.message}`;
 }
 
+function validateRecipeId(fileName, recipe, seenIds) {
+    const errors = [];
+
+    if (typeof recipe.id !== "string" || !UUID_REGEX.test(recipe.id)) {
+        errors.push(`Invalid or missing 'id' field in ${fileName}`);
+        return errors;
+    }
+
+    const expectedFileName = `${recipe.id}.json`;
+
+    if (fileName !== expectedFileName) {
+        errors.push("File name does not match recipe ID.");
+        return errors;
+    }
+
+    if (seenIds.has(recipe.id)) {
+        errors.push("Duplicate recipe ID found.");
+        return errors;
+    } else {
+        seenIds.set(recipe.id, fileName);
+    }
+
+    return errors;
+}
+
 function validateRecipes() {
     let recipeSchema;
     let tagSchema;
+    let commonSchema;
+    let actionsSchema;
+    let toolsSchema;
+    let difficultySchema;
 
     try {
         recipeSchema = readJson(recipeSchemaPath);
         tagSchema = readJson(tagSchemaPath);
+        commonSchema = readJson(commonSchemaPath);
+        actionsSchema = readJson(actionsSchemaPath);
+        toolsSchema = readJson(toolsSchemaPath);
+        difficultySchema = readJson(difficultySchemaPath);
     } catch (error) {
         console.error("Failed to load schema files.");
         console.error(error.message);
@@ -40,6 +90,10 @@ function validateRecipes() {
     });
 
     ajv.addSchema(tagSchema);
+    ajv.addSchema(commonSchema);
+    ajv.addSchema(actionsSchema);
+    ajv.addSchema(toolsSchema);
+    ajv.addSchema(difficultySchema);
 
     let validate;
 
@@ -63,6 +117,8 @@ function validateRecipes() {
 
     let invalidRecipes = 0;
 
+    const seenIds = new Map();
+
     for (const fileName of recipeFiles) {
         const filePath = path.join(recipeDirectory, fileName);
 
@@ -77,17 +133,28 @@ function validateRecipes() {
             continue;
         }
 
-        const isValid = validate(recipe);
+        const isSchemaValid = validate(recipe);
+        const identityErrors = validateRecipeId(fileName, recipe, seenIds);
 
-        if (isValid) {
+        if (isSchemaValid && identityErrors.length === 0) {
             console.log(`PASS  ${fileName}`);
             continue;
         }
 
         console.error(`\nFAIL  ${fileName}`);
 
-        for (const error of validate.errors) {
-            console.error(formatError(error));
+        if (!isSchemaValid) {
+            console.error("  Schema validation errors:");
+        }
+
+        if (validate.errors) {
+            for (const error of validate.errors) {
+                console.error(formatError(error));
+            }
+        }
+
+        for (const error of identityErrors) {
+            console.error(error);
         }
 
         invalidRecipes++;
