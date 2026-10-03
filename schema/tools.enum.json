@@ -1,0 +1,30 @@
+{
+  "$id": "tools.enum.json",
+  "type": "string",
+  "enum": [
+    "baking dish",
+    "baking sheet",
+    "blender",
+    "bowl",
+    "cake pan",
+    "casserole dish",
+    "colander",
+    "cutting board",
+    "frying pan",
+    "grater",
+    "grill pan",
+    "knife",
+    "measuring cups",
+    "measuring spoons",
+    "mixer",
+    "oven",
+    "panini press",
+    "pot",
+    "rolling pin",
+    "saucepan",
+    "skillet",
+    "slow cooker",
+    "spatula",
+    "steamer basket"
+  ]
+}

@@ -4,11 +4,17 @@ This document describes the structure and validation rules for recipe JSON files
 
 ## Required Fields
 
+### `id` (string)
+
+A UUID v4 identifier for the recipe.
+
+The value must be 36 characters (32 hexadecimal characters plus 4 hyphens) long and match the UUID v4 format.
+
 ### `title` (string)
 
 The name of the recipe.
 
-The value must contain at least one character. Recipe titles should also follow the project's recipe naming guidelines.
+The value must contain at least one character.
 
 ### `authors` (array of strings)
 
@@ -156,7 +162,7 @@ Substitute ingredients use the same quantity fields as normal ingredients:
 - `optional`
 - `note`
 
-Substitute ingredients cannot contain additional nested substitute sets.
+Substitute ingredients can contain additional nested substitute sets.
 
 Example with a single-item substitute:
 
@@ -171,7 +177,7 @@ Example with a single-item substitute:
 ]
 ```
 
-Example with a multi-item substitute:
+Example with a compound substitute:
 
 ```json
 "substitutes": [
@@ -183,6 +189,62 @@ Example with a multi-item substitute:
     {
       "item": "Peanut Oil",
       "volume_ml": 5
+    }
+  ]
+]
+```
+
+Example with a nested compound substitute (the compound substitute has variations):
+
+```json
+"substitutes": [
+  [
+    {
+      "item": "Whole Milk",
+      "volume_ml": 240
+    },
+    {
+      "item": "Lemon Juice",
+      "volume_ml": 15,
+      "substitutes": [
+        [
+          {
+            "item": "Vinegar",
+            "volume_ml": 15
+          }
+        ]
+      ]
+    }
+  ]
+]
+```
+
+Example with a nested compound substitute and a single item substitute:
+
+```json
+"substitutes": [
+  [
+    {
+      "item": "Whole Milk",
+      "volume_ml": 240
+    },
+    {
+      "item": "Lemon Juice",
+      "volume_ml": 15,
+      "substitutes": [
+        [
+          {
+            "item": "Vinegar",
+            "volume_ml": 15
+          }
+        ]
+      ]
+    }
+  ],
+  [
+    {
+      "item": "Greek Yogurt",
+      "volume_ml": 240
     }
   ]
 ]
@@ -224,41 +286,9 @@ Example with notes:
 
 ### Allowed Instruction Actions
 
-The `action` field must contain one of the following values:
+The `action` values must come from the approved vocabulary in:
 
-- `assemble`
-- `bake`
-- `beat`
-- `blend`
-- `boil`
-- `broil`
-- `chill`
-- `chop`
-- `combine`
-- `cool`
-- `cut`
-- `fold`
-- `frost`
-- `fry`
-- `garnish`
-- `grill`
-- `knead`
-- `marinate`
-- `melt`
-- `mix`
-- `preheat`
-- `proof`
-- `reduce`
-- `rest`
-- `roast`
-- `saute`
-- `season`
-- `serve`
-- `simmer`
-- `steam`
-- `stir`
-- `toast`
-- `whisk`
+`/schema/actions.enum.json`
 
 The action identifies the primary operation of the step. More detailed actions and context belong in the `content` field.
 
@@ -271,12 +301,9 @@ Contains one or more recipe timing entries.
 Each timing entry requires:
 
 - `title` (string): The type of timing, such as `prep`, `cook`, or `total`.
-- `value` (number): Duration in minutes.
-- `unit` (string): Must be `"minute"`.
+- `minutes` (number): Duration in minutes.
 
-Timing values must be greater than zero.
-
-All times are normalized to minutes before being stored in the recipe JSON.
+Timing minutes must be greater than zero.
 
 Example:
 
@@ -284,13 +311,11 @@ Example:
 "timings": [
   {
     "title": "prep",
-    "value": 15,
-    "unit": "minute"
+    "minutes": 15
   },
   {
     "title": "cook",
-    "value": 90,
-    "unit": "minute"
+    "minutes": 90
   }
 ]
 ```
@@ -386,15 +411,17 @@ Example:
 
 Lists recommended equipment or tools.
 
-Each entry must be a non-empty string, and duplicate entries are not allowed.
+Tool values must come from the approved vocabulary in:
+
+`/schema/tools.enum.json`
 
 Example:
 
 ```json
 "tools": [
-  "Non-Stick Skillet",
-  "Rubber Spatula",
-  "Whisk"
+    "measuring spoons",
+    "mixer",
+    "oven"
 ]
 ```
 
