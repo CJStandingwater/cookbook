@@ -1,4 +1,4 @@
-const SUBMISSION_ENDPOINT = "https://cookbook-submissions.cjstandingwater.workers.dev";
+const SUBMISSION_ENDPOINT = "https://cookbook-submissions.cjstandingwater.workers.dev/submit";
 
 export async function submitRecipe(recipe) {
     const response = await fetch(
