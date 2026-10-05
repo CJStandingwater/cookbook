@@ -32,9 +32,11 @@ function buildNutrition() {
     return nutrition;
 }
 
+const recipeId = crypto.randomUUID();
+
 export function buildRecipe() {
     const recipe = {
-        id: crypto.randomUUID(),
+        id: recipeId,
         title: normalizeWhitespace(document.getElementById("title").value),
         authors: splitCommaSeparated(document.getElementById("authors").value),
         ingredients: buildIngredients(),

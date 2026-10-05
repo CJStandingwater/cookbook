@@ -19,12 +19,10 @@
                 <input id="title" type="text" required>
 
                 <label for="authors">Authors *</label>
-                <input
-                    id="authors"
-                    type="text"
-                    required
-                    placeholder="John Doe, Jane Doe"
-                >
+                <input id="authors"
+                       type="text"
+                       required
+                       placeholder="John Doe, Jane Doe">
                 <p class="hint">Separate multiple authors with commas.</p>
             </fieldset>
 
@@ -65,20 +63,16 @@
                 <input id="servings" type="number" min="0.001" step="any">
 
                 <label for="notes">General Notes</label>
-                <textarea
-                    id="notes"
-                    placeholder="Enter one note per line."
-                ></textarea>
+                <textarea id="notes"
+                          placeholder="Enter one note per line."></textarea>
 
                 <label for="source">Source</label>
                 <input id="source" type="text">
 
                 <label for="tools">Tools</label>
-                <input
-                    id="tools"
-                    type="text"
-                    placeholder="Mixing Bowl, Whisk, 9x13 Pan"
-                >
+                <input id="tools"
+                       type="text"
+                       placeholder="Mixing Bowl, Whisk, 9x13 Pan">
                 <p class="hint">Separate tools with commas.</p>
 
                 <label for="difficulty">Difficulty</label>
@@ -123,9 +117,21 @@
 
             <p id="form-error" class="error" role="alert"></p>
 
-            <button type="submit" class="primary-button">
-                Generate JSON
-            </button>
+            <div class="button-row form-actions">
+                <button type="submit" class="primary-button">
+                    Preview JSON
+                </button>
+
+                <button type="button"
+                        id="submit-recipe"
+                        class="primary-button">
+                    Submit Recipe
+                </button>
+            </div>
+
+            <p id="submission-status"
+               class="status"
+               role="status"></p>
         </form>
 
         <section class="output-section">
