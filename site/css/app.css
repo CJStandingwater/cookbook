@@ -1,0 +1,110 @@
+:root {
+    font-family: Arial, sans-serif;
+    --black: hsl(0 0% 13%);
+    --white: hsl(0 0% 100%);
+    --radius-small: 0.25rem;
+    --radius-medium: 0.5rem;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    line-height: 1.5;
+    color: var(--black);
+    background: var(--primary, var(--white));
+    background-image: var(--background-image);
+}
+
+main {
+    max-width: 1100px;
+    margin: 2.5rem auto;
+    padding: 0 1.25rem 2.5rem;
+    background: hsl(0 0% 100% / 0.55);
+    backdrop-filter: blur(6px);
+    border-radius: var(--radius-medium);
+}
+
+h1,
+h2,
+h3,
+h4 {
+    margin-top: 0;
+}
+
+fieldset {
+    min-width: 0;
+    margin: 0 0 1.5rem;
+    padding: 1.25rem;
+    border: 1px solid var(--accent, var(--black));
+    border-radius: var(--radius-medium);
+    background: var(--primary, var(--white));
+}
+
+legend {
+    padding: 0 0.5rem;
+    font-weight: bold;
+}
+
+label {
+    display: block;
+    margin-top: 0.75rem;
+    font-weight: bold;
+}
+
+input,
+textarea,
+select,
+button {
+    font: inherit;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    margin-top: 0.25rem;
+    padding: 0.5rem;
+    color: var(--black);
+    background: var(--white);
+    border: 1px solid var(--accent, var(--black));
+    border-radius: var(--radius-small);
+}
+
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible,
+    button:focus-visible {
+        outline: 2px solid var(--accent-dark, var(--black));
+        outline-offset: 2px;
+    }
+
+textarea {
+    min-height: 5rem;
+    resize: vertical;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: default;
+}
+
+.hint {
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+}
+
+.error {
+    margin-top: 0.75rem;
+    font-weight: bold;
+}
+
+.status {
+    margin-top: 0.75rem;
+}

@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cookbook Recipe Form</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/themes/splitcomp-pastel-orange.css">
+    <link rel="stylesheet" href="css/components.css">
     <script type="module" src="app.js"></script>
 </head>
 <body>
@@ -44,75 +46,81 @@
 
             <fieldset>
                 <legend>Timings</legend>
-                <div id="timings"></div>
-                <button type="button" id="add-timing">
-                    Add Timing
-                </button>
+                <details>
+                    <div id="timings"></div>
+                    <button type="button" id="add-timing">
+                        Add Timing
+                    </button>
+                </details>
             </fieldset>
 
             <fieldset>
                 <legend>Tags</legend>
-                <div id="tag-container">Loading approved tags...</div>
-                <p id="tag-error" class="error" role="alert"></p>
+                <details>
+                    <div id="tag-container">Loading approved tags...</div>
+                    <p id="tag-error" class="error" role="alert"></p>
+                </details>
             </fieldset>
 
             <fieldset>
                 <legend>Recipe Details</legend>
+                <details>
+                    <label for="servings">Servings</label>
+                    <input id="servings" type="number" min="0.001" step="any">
 
-                <label for="servings">Servings</label>
-                <input id="servings" type="number" min="0.001" step="any">
+                    <label for="notes">General Notes</label>
+                    <textarea id="notes"
+                              placeholder="Enter one note per line."></textarea>
 
-                <label for="notes">General Notes</label>
-                <textarea id="notes"
-                          placeholder="Enter one note per line."></textarea>
+                    <label for="source">Source</label>
+                    <input id="source" type="text">
 
-                <label for="source">Source</label>
-                <input id="source" type="text">
+                    <label for="tools">Tools</label>
+                    <input id="tools"
+                           type="text"
+                           placeholder="Mixing Bowl, Whisk, 9x13 Pan">
+                    <p class="hint">Separate tools with commas.</p>
 
-                <label for="tools">Tools</label>
-                <input id="tools"
-                       type="text"
-                       placeholder="Mixing Bowl, Whisk, 9x13 Pan">
-                <p class="hint">Separate tools with commas.</p>
-
-                <label for="difficulty">Difficulty</label>
-                <select id="difficulty">
-                    <option value="">Not specified</option>
-                    <option value="easy">Easy</option>
-                    <option value="moderate">Moderate</option>
-                    <option value="hard">Hard</option>
-                </select>
+                    <label for="difficulty">Difficulty</label>
+                    <select id="difficulty">
+                        <option value="">Not specified</option>
+                        <option value="easy">Easy</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </details> 
             </fieldset>
 
             <fieldset>
                 <legend>Nutrition</legend>
+                <details>
+                    <div class="nutrition-grid">
+                        <div>
+                            <label for="calories">Calories</label>
+                            <input id="calories" type="number" min="0" step="any">
+                        </div>
 
-                <div class="nutrition-grid">
-                    <div>
-                        <label for="calories">Calories</label>
-                        <input id="calories" type="number" min="0" step="any">
-                    </div>
+                        <div>
+                            <label for="protein">Protein</label>
+                            <input id="protein" type="number" min="0" step="any">
+                        </div>
 
-                    <div>
-                        <label for="protein">Protein</label>
-                        <input id="protein" type="number" min="0" step="any">
-                    </div>
+                        <div>
+                            <label for="fat">Fat</label>
+                            <input id="fat" type="number" min="0" step="any">
+                        </div>
 
-                    <div>
-                        <label for="fat">Fat</label>
-                        <input id="fat" type="number" min="0" step="any">
-                    </div>
+                        <div>
+                            <label for="carbohydrates">Carbohydrates</label>
+                            <input id="carbohydrates" type="number" min="0" step="any">
+                        </div>
 
-                    <div>
-                        <label for="carbohydrates">Carbohydrates</label>
-                        <input id="carbohydrates" type="number" min="0" step="any">
+                        <div>
+                            <label for="fiber">Fiber</label>
+                            <input id="fiber" type="number" min="0" step="any">
+                        </div>
                     </div>
-
-                    <div>
-                        <label for="fiber">Fiber</label>
-                        <input id="fiber" type="number" min="0" step="any">
-                    </div>
-                </div>
+                </details>
             </fieldset>
 
             <p id="form-error" class="error" role="alert"></p>
@@ -136,7 +144,9 @@
 
         <section class="output-section">
             <h2>Generated JSON</h2>
-            <textarea id="json-output" readonly></textarea>
+            <details>
+                <textarea id="json-output" readonly></textarea>
+            </details>
         </section>
     </main>
 
@@ -219,26 +229,32 @@
             <label>Ingredient *</label>
             <input class="ingredient-name" type="text" required>
 
-            <div class="measurement-slot"></div>
+            <details class="ingredient-details">
+                <summary>Details</summary>
 
-            <label class="checkbox-option">
-                <input class="ingredient-optional" type="checkbox">
-                <span>Optional</span>
-            </label>
+                <div class="measurement-slot"></div>
 
-            <label>Note</label>
-            <input class="ingredient-note" type="text">
+                <label class="checkbox-option">
+                    <input class="ingredient-optional" type="checkbox">
+                    <span>Optional</span>
+                </label>
 
-            <div class="substitute-sets"></div>
+                <label>Note</label>
+                <input class="ingredient-note" type="text">
 
-            <div class="button-row">
-                <button type="button" class="add-substitute-set">
-                    Add Substitute Set
-                </button>
-                <button type="button" class="remove-button remove-ingredient">
-                    Remove Ingredient
-                </button>
-            </div>
+                <div class="substitute-sets"></div>
+
+                <div class="button-row">
+                    <button type="button" class="add-substitute-set">
+                        Add Substitute Set
+                    </button>
+                </div>
+            </details>
+
+            <button type="button"
+                    class="remove-button remove-ingredient">
+                Remove Ingredient
+            </button>
         </article>
     </template>
 
