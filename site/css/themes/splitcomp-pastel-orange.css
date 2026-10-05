@@ -1,0 +1,27 @@
+:root {
+    /* Background Image */
+    --background-image: url("../assets/tomatoes.jpg");
+
+    /* HSL Values */
+    --primary-hue: 32;
+    --saturation: 80%;
+    --light: 75%;
+
+    /* Color Scheme Calculations */
+    --secondary-hue: calc(var(--primary-hue) + 150);
+    --accent-hue: calc(var(--primary-hue) + 210);
+
+    /* Modifiers */
+    --light-modifier: 1.2;
+
+    /* Color Calculations */
+    --primary: hsl(var(--primary-hue) var(--saturation) var(--light));
+    --primary-light: hsl(var(--primary-hue) var(--saturation) min(100%, var(--light) * var(--light-modifier)));
+    --primary-dark: hsl(var(--primary-hue) var(--saturation) max(0%, var(--light) / var(--light-modifier)));
+    --secondary: hsl(var(--secondary-hue) var(--saturation) var(--light));
+    --secondary-light: hsl(var(--secondary-hue) var(--saturation) min(100, var(--light) * var(--light-modifier)));
+    --secondary-dark: hsl(var(--secondary-hue) var(--saturation) max(0, var(--light) / var(--light-modifier)));
+    --accent: hsl(var(--accent-hue) var(--saturation) var(--light));
+    --accent-light hsl(var(--accent-hue) var(--saturation) min(100, var(--light) * var(--light-modifier)));
+    --accent-dark: hsl(var(--accent-hue) var(--saturation) max(0, var(--light) / var(--light-modifier)));
+}
