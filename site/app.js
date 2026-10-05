@@ -26,6 +26,8 @@ const submitRecipeButton =
     document.getElementById("submit-recipe");
 const submissionStatus =
     document.getElementById("submission-status");
+const recipeForm =
+    document.getElementById("recipe-form");
 
 document
     .getElementById("add-ingredient-group")
@@ -68,6 +70,10 @@ submitRecipeButton.addEventListener(
     "click",
     async () => {
         submissionStatus.textContent = "";
+
+        if (!recipeForm.reportValidity()) {
+            return;
+        }
 
         if (!validateDynamicFields(formError)) {
             return;

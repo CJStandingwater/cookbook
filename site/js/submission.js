@@ -1,4 +1,4 @@
-const SUBMISSION_ENDPOINT = "http://127.0.0.1:8787/submit";
+const SUBMISSION_ENDPOINT = "https://cookbook-submissions.cjstandingwater.workers.dev";
 
 export async function submitRecipe(recipe) {
     const response = await fetch(
