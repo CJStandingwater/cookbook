@@ -6,6 +6,7 @@ import {
 import { buildRecipe } from "./js/recipe.js";
 import { loadTags } from "./js/tags.js";
 import { validateDynamicFields } from "./js/validation.js";
+import { submitRecipe } from "./js/submission.js";
 
 const ingredientGroupsContainer =
     document.getElementById("ingredient-groups");
@@ -21,6 +22,10 @@ const formError =
     document.getElementById("form-error");
 const jsonOutput =
     document.getElementById("json-output");
+const submitRecipeButton =
+    document.getElementById("submit-recipe");
+const submissionStatus =
+    document.getElementById("submission-status");
 
 document
     .getElementById("add-ingredient-group")
@@ -58,6 +63,37 @@ document
             2
         );
     });
+
+submitRecipeButton.addEventListener(
+    "click",
+    async () => {
+        submissionStatus.textContent = "";
+
+        if (!validateDynamicFields(formError)) {
+            return;
+        }
+
+        const recipe = buildRecipe();
+
+        submitRecipeButton.disabled = true;
+        submissionStatus.textContent =
+            "Submitting recipe...";
+
+        try {
+            const result = await submitRecipe(recipe);
+
+            submissionStatus.textContent =
+                result.message ||
+                "Recipe submitted successfully.";
+        } catch (error) {
+            submissionStatus.textContent =
+                error.message ||
+                "Recipe submission failed.";
+        } finally {
+            submitRecipeButton.disabled = false;
+        }
+    }
+);
 
 addIngredientGroup(ingredientGroupsContainer);
 addInstruction(instructionsContainer);
