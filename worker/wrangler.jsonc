@@ -1,0 +1,30 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "cookbook-submissions",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-03",
+
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "SUBMISSION_LIMITER",
+        "class_name": "SubmissionLimiter"
+      }
+    ]
+  },
+
+  "exports": {
+    "SubmissionLimiter": {
+      "type": "durable-object",
+      "storage": "sqlite"
+    }
+  },
+
+  "secrets": {
+    "required": [
+      "RESEND_API_KEY",
+      "SUBMISSION_FROM",
+      "SUBMISSION_TO"
+    ]
+  }
+}
