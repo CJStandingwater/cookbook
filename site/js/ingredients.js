@@ -1,89 +1,80 @@
-import { cloneTemplate } from "./dom.js";
-import {
-    addMeasurementFields,
-    buildMeasurements
-} from "./measurements.js";
-import {
-    normalizeName,
-    normalizeWhitespace
-} from "./normalize.js";
+import { cloneTemplate } from './dom.js';
+import { addMeasurementFields, buildMeasurements } from './measurements.js';
+import { normalizeName, normalizeWhitespace } from './normalize.js';
 
 export function addIngredientGroup(container) {
-    const group = cloneTemplate("ingredient-group-template");
-    const items = group.querySelector(".ingredient-items");
+    const group = cloneTemplate('ingredient-group-template');
+    const items = group.querySelector('.ingredient-items');
 
     group
-        .querySelector(".add-ingredient")
-        .addEventListener("click", () => addIngredientItem(items));
+        .querySelector('.add-ingredient')
+        .addEventListener('click', () => addIngredientItem(items));
 
     group
-        .querySelector(".remove-section")
-        .addEventListener("click", () => group.remove());
+        .querySelector('.remove-section')
+        .addEventListener('click', () => group.remove());
 
     container.appendChild(group);
     addIngredientItem(items);
 }
 
 function addIngredientItem(container) {
-    const item = cloneTemplate("ingredient-template");
-    const substituteSets = item.querySelector(".substitute-sets");
+    const item = cloneTemplate('ingredient-template');
+    const substituteSets = item.querySelector('.substitute-sets');
 
     addMeasurementFields(item);
 
     item
-        .querySelector(".add-substitute-set")
-        .addEventListener(
-            "click",
-            () => addSubstituteSet(substituteSets)
-        );
+        .querySelector('.add-substitute-set')
+        .addEventListener('click', () => addSubstituteSet(substituteSets));
 
     item
-        .querySelector(".remove-ingredient")
-        .addEventListener("click", () => item.remove());
+        .querySelector('.remove-ingredient')
+        .addEventListener('click', () => item.remove());
 
     container.appendChild(item);
 }
 
 function addSubstituteSet(container) {
-    const set = cloneTemplate("substitute-set-template");
-    const items = set.querySelector(".substitute-items");
+    const set = cloneTemplate('substitute-set-template');
+    const items = set.querySelector('.substitute-items');
 
     set
-        .querySelector(".add-substitute-item")
-        .addEventListener("click", () => addSubstituteItem(items));
+        .querySelector('.add-substitute-item')
+        .addEventListener('click', () => addSubstituteItem(items));
 
     set
-        .querySelector(".remove-substitute-set")
-        .addEventListener("click", () => set.remove());
+        .querySelector('.remove-substitute-set')
+        .addEventListener('click', () => set.remove());
 
     container.appendChild(set);
     addSubstituteItem(items);
 }
 
 function addSubstituteItem(container) {
-    const item = cloneTemplate("substitute-item-template");
+    const item = cloneTemplate('substitute-item-template');
 
     addMeasurementFields(item);
 
     item
-        .querySelector(".remove-substitute-item")
-        .addEventListener("click", () => item.remove());
+        .querySelector('.remove-substitute-item')
+        .addEventListener('click', () => item.remove());
 
     container.appendChild(item);
 }
 
 function buildSubstituteItem(element) {
     const substitute = {
-        item: normalizeName(element.querySelector(".substitute-name").value),
-        ...buildMeasurements(element)
+        item: normalizeName(element.querySelector('.substitute-name').value),
+        ...buildMeasurements(element),
     };
 
-    if (element.querySelector(".substitute-optional").checked) {
+    if (element.querySelector('.substitute-optional').checked) {
         substitute.optional = true;
     }
 
     const note = normalizeWhitespace(
-        element.querySelector(".substitute-note").value
+        element.querySelector('.substitute-note').value,
     );
 
     if (note) {
@@ -94,61 +85,72 @@ function buildSubstituteItem(element) {
 }
 
 function buildSubstitutes(ingredientElement) {
-    return [
-        ...ingredientElement.querySelectorAll(
-            ":scope > .substitute-sets > .substitute-set"
-        )
-    ].map(set => [
-        ...set.querySelectorAll(
-            ":scope > .substitute-items > .substitute-item"
-        )
-    ].map(buildSubstituteItem));
+    const setsContainer = ingredientElement.querySelector('.substitute-sets');
+
+    if (!setsContainer) {
+        return [];
+    }
+
+    return [...setsContainer.children]
+        .filter((element) => element.classList.contains('substitute-set'))
+        .map((set) => {
+            const itemsContainer = set.querySelector('.substitute-items');
+
+            if (!itemsContainer) {
+                return [];
+            }
+
+            return [...itemsContainer.children]
+                .filter((element) => element.classList.contains('substitute-item'))
+                .map(buildSubstituteItem);
+        })
+        .filter((set) => set.length);
 }
 
 export function buildIngredients() {
-    return [...document.querySelectorAll(".ingredient-group")].map(group => {
-        const result = {};
-        const section = normalizeName(
-            group.querySelector(".section-name").value
-        );
+    const container = document.getElementById('ingredient-groups');
 
-        if (section) {
-            result.section = section;
-        }
+    return [...container.querySelectorAll(':scope > .ingredient-group')].map(
+        (group) => {
+            const result = {};
+            const section = normalizeName(group.querySelector('.section-name').value);
 
-        result.items = [
-            ...group.querySelectorAll(
-                ":scope > .ingredient-items > .ingredient-item"
-            )
-        ].map(element => {
-            const ingredient = {
-                item: normalizeName(
-                    element.querySelector(".ingredient-name").value
+            if (section) {
+                result.section = section;
+            }
+
+            result.items = [
+                ...group.querySelectorAll(
+                    ':scope > .ingredient-items > .ingredient-item',
                 ),
-                ...buildMeasurements(element)
-            };
+            ].map((element) => {
+                const ingredient = {
+                    item: normalizeName(element.querySelector('.ingredient-name').value),
+                    ...buildMeasurements(element),
+                };
 
-            if (element.querySelector(".ingredient-optional").checked) {
-                ingredient.optional = true;
-            }
+                if (element.querySelector('.ingredient-optional').checked) {
+                    ingredient.optional = true;
+                }
 
-            const note = normalizeWhitespace(
-                element.querySelector(".ingredient-note").value
-            );
+                const note = normalizeWhitespace(
+                    element.querySelector('.ingredient-note').value,
+                );
 
-            if (note) {
-                ingredient.note = note;
-            }
+                if (note) {
+                    ingredient.note = note;
+                }
 
-            const substitutes = buildSubstitutes(element);
+                const substitutes = buildSubstitutes(element);
 
-            if (substitutes.length) {
-                ingredient.substitutes = substitutes;
-            }
+                if (substitutes.length) {
+                    ingredient.substitutes = substitutes;
+                }
 
-            return ingredient;
-        });
+                return ingredient;
+            });
 
-        return result;
-    });
+            return result;
+        },
+    );
 }

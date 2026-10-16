@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cookbook Recipe Form</title>
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/themes/splitcomp-pastel-orange.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/view.css">
+    <link rel="stylesheet" href="css/view-print.css" media="print">
     <script type="module" src="app.js"></script>
 </head>
 <body>
@@ -18,13 +20,13 @@
                 <legend>Recipe</legend>
 
                 <label for="title">Title *</label>
-                <input id="title" type="text" required>
+                <input id="title" type="text" required />
 
                 <label for="authors">Authors *</label>
                 <input id="authors"
                        type="text"
                        required
-                       placeholder="John Doe, Jane Doe">
+                       placeholder="John Doe, Jane Doe" />
                 <p class="hint">Separate multiple authors with commas.</p>
             </fieldset>
 
@@ -39,18 +41,14 @@
             <fieldset>
                 <legend>Instructions *</legend>
                 <div id="instructions"></div>
-                <button type="button" id="add-instruction">
-                    Add Instruction
-                </button>
+                <button type="button" id="add-instruction">Add Instruction</button>
             </fieldset>
 
             <fieldset>
                 <legend>Timings</legend>
                 <details>
                     <div id="timings"></div>
-                    <button type="button" id="add-timing">
-                        Add Timing
-                    </button>
+                    <button type="button" id="add-timing">Add Timing</button>
                 </details>
             </fieldset>
 
@@ -66,19 +64,19 @@
                 <legend>Recipe Details</legend>
                 <details>
                     <label for="servings">Servings</label>
-                    <input id="servings" type="number" min="0.001" step="any">
+                    <input id="servings" type="number" min="0.001" step="any" />
 
                     <label for="notes">General Notes</label>
                     <textarea id="notes"
                               placeholder="Enter one note per line."></textarea>
 
                     <label for="source">Source</label>
-                    <input id="source" type="text">
+                    <input id="source" type="text" />
 
                     <label for="tools">Tools</label>
                     <input id="tools"
                            type="text"
-                           placeholder="Mixing Bowl, Whisk, 9x13 Pan">
+                           placeholder="Mixing Bowl, Whisk, 9x13 Pan" />
                     <p class="hint">Separate tools with commas.</p>
 
                     <label for="difficulty">Difficulty</label>
@@ -88,7 +86,7 @@
                         <option value="moderate">Moderate</option>
                         <option value="hard">Hard</option>
                     </select>
-                </details> 
+                </details>
             </fieldset>
 
             <fieldset>
@@ -97,27 +95,27 @@
                     <div class="nutrition-grid">
                         <div>
                             <label for="calories">Calories</label>
-                            <input id="calories" type="number" min="0" step="any">
+                            <input id="calories" type="number" min="0" step="any" />
                         </div>
 
                         <div>
                             <label for="protein">Protein</label>
-                            <input id="protein" type="number" min="0" step="any">
+                            <input id="protein" type="number" min="0" step="any" />
                         </div>
 
                         <div>
                             <label for="fat">Fat</label>
-                            <input id="fat" type="number" min="0" step="any">
+                            <input id="fat" type="number" min="0" step="any" />
                         </div>
 
                         <div>
                             <label for="carbohydrates">Carbohydrates</label>
-                            <input id="carbohydrates" type="number" min="0" step="any">
+                            <input id="carbohydrates" type="number" min="0" step="any" />
                         </div>
 
                         <div>
                             <label for="fiber">Fiber</label>
-                            <input id="fiber" type="number" min="0" step="any">
+                            <input id="fiber" type="number" min="0" step="any" />
                         </div>
                     </div>
                 </details>
@@ -126,20 +124,18 @@
             <p id="form-error" class="error" role="alert"></p>
 
             <div class="button-row form-actions">
-                <button type="submit" class="primary-button">
-                    Preview JSON
+                <button type="submit" class="primary-button">Preview JSON</button>
+
+                <button type="button" id="view-recipe" class="primary-button">
+                    View Recipe
                 </button>
 
-                <button type="button"
-                        id="submit-recipe"
-                        class="primary-button">
+                <button type="button" id="submit-recipe" class="primary-button">
                     Submit Recipe
                 </button>
             </div>
 
-            <p id="submission-status"
-               class="status"
-               role="status"></p>
+            <p id="submission-status" class="status" role="status"></p>
         </form>
 
         <section class="output-section">
@@ -148,19 +144,49 @@
                 <textarea id="json-output" readonly></textarea>
             </details>
         </section>
+
+        <section id="recipe-preview-section" class="recipe-preview-section" hidden>
+            <div class="viewer-controls">
+                <fieldset>
+                    <legend>Measurements</legend>
+
+                    <label>
+                        <input type="radio" name="preview-measurement-system" value="imperial" checked>
+                        Imperial
+                    </label>
+
+                    <label>
+                        <input type="radio" name="preview-measurement-system" value="metric">
+                        Metric
+                    </label>
+                </fieldset>
+            </div>
+
+            <article id="recipe-preview" class="recipe-preview" hidden></article>
+        </section>
     </main>
+
+
+
+
+
+
+
+
+
+
+
+
 
     <template id="ingredient-group-template">
         <section class="ingredient-group">
             <label>Section Name</label>
-            <input class="section-name" type="text" placeholder="Optional">
+            <input class="section-name" type="text" placeholder="Optional" />
 
             <div class="ingredient-items"></div>
 
             <div class="button-row">
-                <button type="button" class="add-ingredient">
-                    Add Ingredient
-                </button>
+                <button type="button" class="add-ingredient">Add Ingredient</button>
                 <button type="button" class="remove-button remove-section">
                     Remove Section
                 </button>
@@ -172,13 +198,11 @@
         <div class="measurement-grid">
             <div>
                 <label>Volume</label>
-                <input
-                    class="volume-amount"
-                    type="number"
-                    step="any"
-                    min="0.001"
-                    placeholder="Amount"
-                >
+                <input class="volume-amount"
+                       type="number"
+                       step="any"
+                       min="0.001"
+                       placeholder="Amount" />
                 <select class="volume-unit">
                     <option value="ml">milliliter</option>
                     <option value="l">liter</option>
@@ -193,13 +217,11 @@
 
             <div>
                 <label>Weight</label>
-                <input
-                    class="weight-amount"
-                    type="number"
-                    step="any"
-                    min="0.001"
-                    placeholder="Amount"
-                >
+                <input class="weight-amount"
+                       type="number"
+                       step="any"
+                       min="0.001"
+                       placeholder="Amount" />
                 <select class="weight-unit">
                     <option value="g">gram</option>
                     <option value="kg">kilogram</option>
@@ -210,15 +232,14 @@
 
             <div>
                 <label>Count</label>
-                <input
-                    class="count-amount"
-                    type="number"
-                    step="any"
-                    min="0.001"
-                    placeholder="Amount"
-                >
+                <input class="count-amount"
+                       type="number"
+                       step="any"
+                       min="0.001"
+                       placeholder="Amount" />
                 <p class="hint">
-                    Use for eggs, fruit, cloves, slices, packages, or other counted items.
+                    Use for eggs, fruit, cloves, slices, packages, or other counted
+                    items.
                 </p>
             </div>
         </div>
@@ -227,7 +248,7 @@
     <template id="ingredient-template">
         <article class="ingredient-item">
             <label>Ingredient *</label>
-            <input class="ingredient-name" type="text" required>
+            <input class="ingredient-name" type="text" required />
 
             <details class="ingredient-details">
                 <summary>Details</summary>
@@ -235,12 +256,12 @@
                 <div class="measurement-slot"></div>
 
                 <label class="checkbox-option">
-                    <input class="ingredient-optional" type="checkbox">
+                    <input class="ingredient-optional" type="checkbox" />
                     <span>Optional</span>
                 </label>
 
                 <label>Note</label>
-                <input class="ingredient-note" type="text">
+                <input class="ingredient-note" type="text" />
 
                 <div class="substitute-sets"></div>
 
@@ -251,8 +272,7 @@
                 </div>
             </details>
 
-            <button type="button"
-                    class="remove-button remove-ingredient">
+            <button type="button" class="remove-button remove-ingredient">
                 Remove Ingredient
             </button>
         </article>
@@ -277,17 +297,17 @@
     <template id="substitute-item-template">
         <article class="substitute-item">
             <label>Substitute Ingredient *</label>
-            <input class="substitute-name" type="text" required>
+            <input class="substitute-name" type="text" required />
 
             <div class="measurement-slot"></div>
 
             <label class="checkbox-option">
-                <input class="substitute-optional" type="checkbox">
+                <input class="substitute-optional" type="checkbox" />
                 <span>Optional</span>
             </label>
 
             <label>Note</label>
-            <input class="substitute-note" type="text">
+            <input class="substitute-note" type="text" />
 
             <button type="button" class="remove-button remove-substitute-item">
                 Remove Substitute Ingredient
@@ -306,10 +326,8 @@
             <textarea class="instruction-content" required></textarea>
 
             <label>Notes</label>
-            <textarea
-                class="instruction-notes"
-                placeholder="Enter one note per line."
-            ></textarea>
+            <textarea class="instruction-notes"
+                      placeholder="Enter one note per line."></textarea>
 
             <button type="button" class="remove-button remove-instruction">
                 Remove Instruction
@@ -322,17 +340,12 @@
             <div class="row">
                 <div>
                     <label>Timing Name</label>
-                    <input class="timing-title" type="text" placeholder="prep">
+                    <input class="timing-title" type="text" placeholder="prep" />
                 </div>
 
                 <div>
                     <label>Amount</label>
-                    <input
-                        class="timing-value"
-                        type="number"
-                        step="any"
-                        min="0.001"
-                    >
+                    <input class="timing-value" type="number" step="any" min="0.001" />
                 </div>
             </div>
 
