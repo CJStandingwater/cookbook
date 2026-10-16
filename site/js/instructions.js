@@ -1,84 +1,82 @@
-import { INSTRUCTION_ACTIONS } from "./constants.js";
-import { cloneTemplate } from "./dom.js";
-import { optionalNumber, roundMeasurement } from "./measurements.js";
-import {
-    formatLabel,
-    normalizeWhitespace,
-    splitLines
-} from "./normalize.js";
+import { INSTRUCTION_ACTIONS } from './constants.js';
+import { cloneTemplate } from './dom.js';
+import { optionalNumber, roundMeasurement } from './measurements.js';
+import { formatLabel, normalizeWhitespace, splitLines } from './normalize.js';
 
 export function addInstruction(container) {
-    const instruction = cloneTemplate("instruction-template");
-    const actionSelect = instruction.querySelector(".instruction-action");
+    const instruction = cloneTemplate('instruction-template');
+    const actionSelect = instruction.querySelector('.instruction-action');
 
     for (const action of INSTRUCTION_ACTIONS) {
-        const option = document.createElement("option");
+        const option = document.createElement('option');
         option.value = action;
         option.textContent = formatLabel(action);
         actionSelect.appendChild(option);
     }
 
     instruction
-        .querySelector(".remove-instruction")
-        .addEventListener("click", () => instruction.remove());
+        .querySelector('.remove-instruction')
+        .addEventListener('click', () => instruction.remove());
 
     container.appendChild(instruction);
 }
 
 export function addTiming(container) {
-    const timing = cloneTemplate("timing-template");
+    const timing = cloneTemplate('timing-template');
 
     timing
-        .querySelector(".remove-timing")
-        .addEventListener("click", () => timing.remove());
+        .querySelector('.remove-timing')
+        .addEventListener('click', () => timing.remove());
 
     container.appendChild(timing);
 }
 
 export function buildInstructions() {
-    return [...document.querySelectorAll(".instruction")].map(element => {
-        const instruction = {
-            action: element.querySelector(".instruction-action").value,
-            content: normalizeWhitespace(
-                element.querySelector(".instruction-content").value
-            )
-        };
+    const container = document.getElementById('instructions');
 
-        const notes = splitLines(
-            element.querySelector(".instruction-notes").value
-        );
+    return [...container.querySelectorAll(':scope > .instruction')].map(
+        (element) => {
+            const instruction = {
+                action: element.querySelector('.instruction-action').value,
 
-        if (notes.length) {
-            instruction.notes = notes;
-        }
+                content: normalizeWhitespace(
+                    element.querySelector('.instruction-content').value,
+                ),
+            };
 
-        return instruction;
-    });
+            const notes = splitLines(
+                element.querySelector('.instruction-notes').value,
+            );
+
+            if (notes.length) {
+                instruction.notes = notes;
+            }
+
+            return instruction;
+        },
+    );
 }
 
 export function buildTimings() {
-    return [...document.querySelectorAll(".timing")]
-        .map(element => {
+    const container = document.getElementById('timings');
+
+    return [...container.querySelectorAll(':scope > .timing')]
+        .map((element) => {
             const title = normalizeWhitespace(
-                element.querySelector(".timing-title").value
+                element.querySelector('.timing-title').value,
             ).toLowerCase();
 
-            const value = optionalNumber(
-                element.querySelector(".timing-value")
-            );
+            const value = optionalNumber(element.querySelector('.timing-value'));
 
             if (!title || value === undefined) {
                 return null;
             }
 
-            const unit = element.querySelector(".timing-unit").value;
+            const unit = element.querySelector('.timing-unit').value;
 
             return {
                 title,
-                value: roundMeasurement(
-                    unit === "hour" ? value * 60 : value
-                ),
-                unit: "minute"
+                minutes: roundMeasurement(unit === 'hour' ? value * 60 : value),
             };
         })
         .filter(Boolean);

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Recipe Viewer</title>
+
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/themes/splitcomp-pastel-orange.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/view.css" />
+    <link rel="stylesheet" href="css/view-print.css" media="print">
+</head>
+
+<body>
+    <main class="recipe-viewer-page">
+        <div class="viewer-controls">
+            <fieldset>
+                <legend>Measurements</legend>
+
+                <label>
+                    <input type="radio"
+                           name="measurement-system"
+                           value="imperial"
+                           checked />
+                    Imperial
+                </label>
+
+                <label>
+                    <input type="radio" name="measurement-system" value="metric" />
+                    Metric
+                </label>
+            </fieldset>
+        </div>
+
+        <p id="viewer-status" class="status" role="status">Loading recipe...</p>
+
+        <article id="recipe-viewer" class="recipe-viewer" hidden></article>
+    </main>
+
+    <script type="module" src="js/view/viewer.js"></script>
+</body>
+</html>
