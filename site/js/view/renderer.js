@@ -52,10 +52,11 @@ function buildHeader(recipe) {
 
 function buildMetadata(recipe) {
     const metadata = createElement('div', 'recipe-metadata');
+    const multiplier = document.querySelector('input[name="recipe-multiplier"]').value;
 
     if (recipe.servings !== undefined) {
         metadata.appendChild(
-            createElement('span', 'recipe-servings', `Servings: ${recipe.servings}`),
+            createElement('span', 'recipe-servings', `Servings: ${recipe.servings * multiplier}`),
         );
     }
 
@@ -307,17 +308,18 @@ function refreshIngredientNotes(section, container) {
 
 function formatIngredientMeasurement(ingredient, system) {
     const measurements = [];
+    const multiplier = document.querySelector('input[name="recipe-multiplier"]').value;
 
     if (ingredient.volume_ml !== undefined) {
-        measurements.push(formatVolume(ingredient.volume_ml, system));
+        measurements.push(formatVolume(ingredient.volume_ml * multiplier, system));
     }
 
     if (ingredient.weight_g !== undefined) {
-        measurements.push(formatWeight(ingredient.weight_g, system));
+        measurements.push(formatWeight(ingredient.weight_g * multiplier, system));
     }
 
     if (ingredient.count !== undefined) {
-        measurements.push(formatCount(ingredient.count));
+        measurements.push(formatCount(ingredient.count * multiplier));
     }
 
     return measurements.filter(Boolean).join(' / ');
