@@ -6,6 +6,11 @@ const RECIPE_ID_PATTERN =
 
 export function getRecipeId() {
     const params = new URLSearchParams(window.location.search);
+
+    if (params.size == 0) {
+        throw new Error('URL Search Params not provided');
+    }
+
     const id = params.get('id');
 
     if (!id || !RECIPE_ID_PATTERN.test(id)) {
