@@ -17,7 +17,7 @@
     <main class="recipe-viewer-page">
         <div class="viewer-controls">
             <fieldset>
-                <legend>Measurements</legend>
+                <legend>Recipe Controls</legend>
 
                 <label>
                     <input type="radio"
@@ -30,6 +30,11 @@
                 <label>
                     <input type="radio" name="measurement-system" value="metric" />
                     Metric
+                </label>
+
+                <label>
+                    <input type="number" name="recipe-multiplier" value="1" min="0" step="0.25"/>
+                    Multiplier
                 </label>
             </fieldset>
         </div>

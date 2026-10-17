@@ -1,6 +1,7 @@
 /* Buttons */
 
-button {
+button,
+input[type="button"] {
     margin-top: 0.75rem;
     padding: 0.5rem 0.875rem;
     color: var(--black);
@@ -10,18 +11,21 @@ button {
     cursor: pointer;
 }
 
-button:hover {
-    background: var(--secondary-dark);
-}
+    button:hover,
+    input[type="button"]:hover {
+        background: var(--secondary-dark);
+    }
 
-button:active {
-    background: var(--secondary-dark);
-}
+    button:active,
+    input[type="button"]:active {
+        background: var(--secondary-dark);
+    }
 
-button:disabled {
-    opacity: 0.6;
-    cursor: default;
-}
+    button:disabled,
+    input[type="button"]:disabled {
+        opacity: 0.6;
+        cursor: default;
+    }
 
 .primary-button {
     padding: 0.625rem 1.125rem;

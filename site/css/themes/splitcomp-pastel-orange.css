@@ -19,9 +19,9 @@
     --primary-light: hsl(var(--primary-hue) var(--saturation) min(100%, var(--light) * var(--light-modifier)));
     --primary-dark: hsl(var(--primary-hue) var(--saturation) max(0%, var(--light) / var(--light-modifier)));
     --secondary: hsl(var(--secondary-hue) var(--saturation) var(--light));
-    --secondary-light: hsl(var(--secondary-hue) var(--saturation) min(100, var(--light) * var(--light-modifier)));
-    --secondary-dark: hsl(var(--secondary-hue) var(--saturation) max(0, var(--light) / var(--light-modifier)));
+    --secondary-light: hsl(var(--secondary-hue) var(--saturation) min(100%, var(--light) * var(--light-modifier)));
+    --secondary-dark: hsl(var(--secondary-hue) var(--saturation) max(0%, var(--light) / var(--light-modifier)));
     --accent: hsl(var(--accent-hue) var(--saturation) var(--light));
-    --accent-light hsl(var(--accent-hue) var(--saturation) min(100, var(--light) * var(--light-modifier)));
-    --accent-dark: hsl(var(--accent-hue) var(--saturation) max(0, var(--light) / var(--light-modifier)));
+    --accent-light hsl(var(--accent-hue) var(--saturation) min(100%, var(--light) * var(--light-modifier)));
+    --accent-dark: hsl(var(--accent-hue) var(--saturation) max(0%, var(--light) / var(--light-modifier)));
 }
