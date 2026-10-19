@@ -8,7 +8,7 @@ const PAGE_SIZE = 24;
 
 const browser = document.getElementById('recipe-browser');
 const status = document.getElementById('browser-status');
-const titleSearch = document.querySelector('input[name="recipe-title-search"]');
+const recipeSearch = document.querySelector('input[name="recipe-search"]');
 
 let searchTimer = null;
 
@@ -18,20 +18,22 @@ async function loadRecipes() {
 
     const url = new URL(BROWSE_ENDPOINT);
 
-    if (titleSearch.value.trim()) {
-        url.searchParams.set('title', titleSearch.value.trim());
+    if (recipeSearch.value.trim()) {
+        url.searchParams.set(
+            'search',
+            recipeSearch.value.trim(),
+        );
     }
 
     url.searchParams.set('limit', PAGE_SIZE);
 
     try {
         const response = await fetch(url);
+        const result = await response.json();
 
         if (!response.ok) {
-            throw new Error('Unable to load recipes.');
+            throw new Error(result.message || 'Unable to load recipes.');
         }
-
-        const result = await response.json();
 
         renderRecipes(result.recipes);
     } catch (error) {
@@ -133,7 +135,7 @@ function showError(message) {
     status.classList.add('error');
 }
 
-titleSearch.addEventListener('input', () => {
+recipeSearch.addEventListener('input', () => {
     clearTimeout(searchTimer);
 
     searchTimer = setTimeout(loadRecipes, 250);

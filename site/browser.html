@@ -18,9 +18,15 @@
             <fieldset>
                 <legend>Browser Controls</legend>
                 <label>
-                    Recipe Title
-                    <input type="text" name="recipe-title-search" />
+                    Recipe Search
+                    <input type="text" name="recipe-search" placeholder="tags.contains[(fall & dessert) | comfort]" />
                 </label>
+
+                <p class="hint">
+                    Search: title, authors, tags, tools, difficulty, source, ingredients,
+                    or total_minutes. Use contains/excludes for text, equals/under/over
+                    for total_minutes, &amp; for AND, | for OR, and parentheses for grouping.
+                </p>
             </fieldset>
         </div>
 
