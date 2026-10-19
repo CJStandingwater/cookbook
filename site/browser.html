@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Recipe Browser</title>
+
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/themes/splitcomp-pastel-orange.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/browser.css" />
+</head>
+
+<body>
+    <main class="recipe-browser-page">
+        <div class="browser-controls">
+            <fieldset>
+                <legend>Browser Controls</legend>
+                <label>
+                    Recipe Title
+                    <input type="text" name="recipe-title-search" />
+                </label>
+            </fieldset>
+        </div>
+
+        <p id="browser-status" class="status" role="status">Loading results...</p>
+
+        <article id="recipe-browser" class="recipe-browser" hidden></article>
+    </main>
+
+    <script type="module" src="js/browse/browser.js"></script>
+</body>
+</html>

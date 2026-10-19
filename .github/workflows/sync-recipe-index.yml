@@ -1,0 +1,53 @@
+name: Sync Recipe Index
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "recipes/*.json"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate cookbook
+        run: npm run check
+
+      - name: Sync changed recipes
+        env:
+          INDEX_ENDPOINT: ${{ vars.INDEX_ENDPOINT }}
+          INDEX_API_KEY: ${{ secrets.INDEX_API_KEY }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: |
+          mapfile -t recipes < <(
+            git diff \
+              --name-only \
+              --diff-filter=AM \
+              "$BEFORE" \
+              "$AFTER" \
+              -- "recipes/*.json"
+          )
+
+          if [ ${#recipes[@]} -eq 0 ]; then
+            echo "No recipes to index."
+            exit 0
+          fi
+
+          node scripts/sync-recipe-index.js "${recipes[@]}"
