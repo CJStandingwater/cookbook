@@ -61,6 +61,8 @@ function createRecipeCard(recipe) {
     const link = document.createElement('a');
     link.className = 'recipe-card';
     link.href = `viewer.html?id=${encodeURIComponent(recipe.id)}`;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
 
     const title = document.createElement('h2');
     title.textContent = recipe.title;
