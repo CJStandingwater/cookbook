@@ -4,6 +4,7 @@ import { readRecipeRequest } from "./request.js";
 import { checkSubmissionLimit } from "./limiter.js";
 import { sendRecipeEmail } from "./resend.js";
 import { deleteRecipeIndex, getRecipeCards, upsertRecipeIndex } from './database.js';
+import { parseSearch, SearchSyntaxError, validateSearchRules } from './search.js';
 
 export { SubmissionLimiter } from "./limiter.js";
 
@@ -201,10 +202,24 @@ async function handleBrowse(request, env) {
     const title = url.searchParams.get('title') ?? '';
     const limit = Number.parseInt(url.searchParams.get('limit') ?? '24', 10) || 24;
     const offset = Number.parseInt(url.searchParams.get('offset') ?? '0', 10) || 0;
+    const search = url.searchParams.get('search') ?? '';
+
+    let rules = [];
+
+    try {
+        rules = validateSearchRules(parseSearch(search));
+    } catch (error) {
+        if (error instanceof SearchSyntaxError) {
+            return jsonResponse({ message: error.message }, 400, allowedOrigin);
+        }
+
+        throw error;
+    }
 
     try {
         const result = await getRecipeCards(env, {
             title,
+            rules,
             limit,
             offset,
         });

@@ -187,8 +187,33 @@ export async function deleteRecipeIndex(recipeId, env) {
 
 export async function getRecipeCards(env, options = {}) {
     const title = options.title?.trim() ?? '';
+    const rules = options.rules ?? [];
     const limit = Math.min(Math.max(options.limit ?? 24, 1), 100);
     const offset = Math.max(options.offset ?? 0, 0);
+
+    const filters = [];
+    const bindings = [];
+
+    if (title) {
+        bindings.push(title);
+
+        filters.push(`
+            LOWER(r.title) LIKE
+                '%' || LOWER(?${bindings.length}) || '%'
+        `);
+    }
+
+    for (const rule of rules) {
+        filters.push(compileSearchExpression(rule,bindings));
+    }
+
+    const whereClause = filters.length ? `WHERE ${filters.join(' AND ')}` : '';
+
+    bindings.push(limit + 1);
+    const limitParameter = `?${bindings.length}`;
+
+    bindings.push(offset);
+    const offsetParameter = `?${bindings.length}`;
 
     const { results } = await env.COOKBOOK_DB.prepare(
         `
@@ -200,40 +225,48 @@ export async function getRecipeCards(env, options = {}) {
                 r.source,
 
                 (
-                    SELECT GROUP_CONCAT(name, char(31))
+                    SELECT GROUP_CONCAT(
+                        name,
+                        char(31)
+                    )
                     FROM (
                         SELECT a.name
                         FROM recipe_authors ra
                         JOIN authors a
-                            ON a.id = ra.author_id
-                        WHERE ra.recipe_id = r.id
+                            ON a.id =
+                                ra.author_id
+                        WHERE ra.recipe_id =
+                            r.id
                         ORDER BY ra.position
                     )
                 ) AS authors,
 
                 (
-                    SELECT GROUP_CONCAT(name, char(31))
+                    SELECT GROUP_CONCAT(
+                        name,
+                        char(31)
+                    )
                     FROM (
                         SELECT t.name
                         FROM recipe_tags rt
                         JOIN tags t
-                            ON t.id = rt.tag_id
-                        WHERE rt.recipe_id = r.id
-                        ORDER BY t.name COLLATE NOCASE
+                            ON t.id =
+                                rt.tag_id
+                        WHERE rt.recipe_id =
+                            r.id
+                        ORDER BY
+                            t.name COLLATE NOCASE
                     )
                 ) AS tags
 
             FROM recipes r
-            WHERE (
-                ?1 = ''
-                OR LOWER(r.title) LIKE '%' || LOWER(?1) || '%'
-            )
+            ${whereClause}
             ORDER BY r.title COLLATE NOCASE
-            LIMIT ?2
-            OFFSET ?3
+            LIMIT ${limitParameter}
+            OFFSET ${offsetParameter}
             `,
     )
-        .bind(title, limit + 1, offset)
+        .bind(...bindings)
         .all();
 
     const hasMore = results.length > limit;
@@ -250,6 +283,136 @@ export async function getRecipeCards(env, options = {}) {
         })),
         hasMore,
     };
+}
+
+const RELATION_SEARCHES = {
+    authors: {
+        relationTable: 'recipe_authors',
+        valueTable: 'authors',
+        foreignKey: 'author_id',
+    },
+    tags: {
+        relationTable: 'recipe_tags',
+        valueTable: 'tags',
+        foreignKey: 'tag_id',
+    },
+    tools: {
+        relationTable: 'recipe_tools',
+        valueTable: 'tools',
+        foreignKey: 'tool_id',
+    },
+    ingredients: {
+        relationTable: 'recipe_ingredients',
+        valueTable: 'ingredients',
+        foreignKey: 'ingredient_id',
+    },
+};
+
+function compileSearchExpression(rule, bindings) {
+    const expression = compileExpression(rule.expression, bindings, (value) =>
+        compileSearchValue(rule, value, bindings),
+    );
+
+    if (rule.context === 'excludes') {
+        return `NOT (${expression})`;
+    }
+
+    return expression;
+}
+
+function compileExpression(expression, bindings, compileValue) {
+    if (expression.type === 'value') {
+        return compileValue(expression.value);
+    }
+
+    const left = compileExpression(expression.left, bindings, compileValue);
+    const right = compileExpression(expression.right, bindings, compileValue);
+    const operator = expression.type === 'and' ? 'AND' : 'OR';
+
+    return `
+        (
+            ${left}
+            ${operator}
+            ${right}
+        )
+    `;
+}
+
+function compileSearchValue(rule, value, bindings) {
+    bindings.push(rule.dataPoint === 'total_minutes' ? Number(value) : value);
+
+    const parameter = `?${bindings.length}`;
+
+    if (RELATION_SEARCHES[rule.dataPoint]) {
+        return compileRelationSearch(rule.dataPoint, parameter);
+    }
+
+    switch (rule.dataPoint) {
+        case 'title':
+            return `
+                LOWER(r.title) LIKE
+                    '%' || LOWER(${parameter}) || '%'
+            `;
+
+        case 'source':
+            return `
+                LOWER(COALESCE(r.source, '')) LIKE
+                    '%' || LOWER(${parameter}) || '%'
+            `;
+
+        case 'difficulty':
+            return `
+                r.difficulty =
+                    ${parameter}
+                    COLLATE NOCASE
+            `;
+
+        case 'total_minutes':
+            return compileMinutesSearch(rule.context, parameter);
+
+        default:
+            throw new Error(`Unsupported search data point: ${rule.dataPoint}`);
+    }
+}
+
+function compileRelationSearch(dataPoint, parameter) {
+    const relation = RELATION_SEARCHES[dataPoint];
+
+    return `
+        EXISTS (
+            SELECT 1
+            FROM ${relation.relationTable} relation
+            JOIN ${relation.valueTable} value
+                ON value.id =
+                    relation.${relation.foreignKey}
+            WHERE relation.recipe_id = r.id
+                AND value.name =
+                    ${parameter}
+                    COLLATE NOCASE
+        )
+    `;
+}
+
+function compileMinutesSearch(context, parameter) {
+    switch (context) {
+        case 'equals':
+            return `
+                r.total_minutes = ${parameter}
+            `;
+
+        case 'under':
+            return `
+                r.total_minutes < ${parameter}
+            `;
+
+        case 'over':
+            return `
+                r.total_minutes > ${parameter}
+            `;
+
+        default:
+            throw new Error(`Unsupported total_minutes context: ${context}`);
+    }
 }
 
 function splitNames(value) {
