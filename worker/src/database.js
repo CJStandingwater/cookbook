@@ -184,3 +184,74 @@ export async function deleteRecipeIndex(recipeId, env) {
         .bind(recipeId)
         .run()
 }
+
+export async function getRecipeCards(env, options = {}) {
+    const title = options.title?.trim() ?? '';
+    const limit = Math.min(Math.max(options.limit ?? 24, 1), 100);
+    const offset = Math.max(options.offset ?? 0, 0);
+
+    const { results } = await env.COOKBOOK_DB.prepare(
+        `
+            SELECT
+                r.id,
+                r.title,
+                r.total_minutes,
+                r.difficulty,
+                r.source,
+
+                (
+                    SELECT GROUP_CONCAT(name, char(31))
+                    FROM (
+                        SELECT a.name
+                        FROM recipe_authors ra
+                        JOIN authors a
+                            ON a.id = ra.author_id
+                        WHERE ra.recipe_id = r.id
+                        ORDER BY ra.position
+                    )
+                ) AS authors,
+
+                (
+                    SELECT GROUP_CONCAT(name, char(31))
+                    FROM (
+                        SELECT t.name
+                        FROM recipe_tags rt
+                        JOIN tags t
+                            ON t.id = rt.tag_id
+                        WHERE rt.recipe_id = r.id
+                        ORDER BY t.name COLLATE NOCASE
+                    )
+                ) AS tags
+
+            FROM recipes r
+            WHERE (
+                ?1 = ''
+                OR LOWER(r.title) LIKE '%' || LOWER(?1) || '%'
+            )
+            ORDER BY r.title COLLATE NOCASE
+            LIMIT ?2
+            OFFSET ?3
+            `,
+    )
+        .bind(title, limit + 1, offset)
+        .all();
+
+    const hasMore = results.length > limit;
+
+    if (hasMore) {
+        results.pop();
+    }
+
+    return {
+        recipes: results.map((recipe) => ({
+            ...recipe,
+            authors: splitNames(recipe.authors),
+            tags: splitNames(recipe.tags),
+        })),
+        hasMore,
+    };
+}
+
+function splitNames(value) {
+    return value ? value.split('\u001f') : [];
+}
