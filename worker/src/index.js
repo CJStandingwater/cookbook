@@ -3,13 +3,13 @@ import { getAllowedOrigin } from "./cors.js";
 import { readRecipeRequest } from "./request.js";
 import { checkSubmissionLimit } from "./limiter.js";
 import { sendRecipeEmail } from "./resend.js";
-import { upsertRecipeIndex } from "./database.js";
-import { deleteRecipeIndex, upsertRecipeIndex } from "./database.js";
+import { deleteRecipeIndex, getRecipeCards, upsertRecipeIndex } from './database.js';
 
 export { SubmissionLimiter } from "./limiter.js";
 
 const SUBMISSION_EP = "/submit";
 const INDEX_EP = "/index";
+const BROWSER_EP = '/browse';
 
 export default {
     async fetch(request, env) {
@@ -18,6 +18,8 @@ export default {
                 return handleSubmit(request, env);
             case INDEX_EP:
                 return handleIndex(request, env);
+            case BROWSER_EP:
+                return handleBrowse(request, env);
             default:
                 return Response.json(
                     { message: "Not Found" },
@@ -169,5 +171,52 @@ async function handleIndex(request, env, pathname) {
         console.error('Recipe indexing failed:', error);
 
         return jsonResponse({ message: 'Failed to index recipe.' }, 500, null);
+    }
+}
+
+async function handleBrowse(request, env) {
+    const allowedOrigin = getAllowedOrigin(request);
+
+    if (allowedOrigin === false) {
+        return jsonResponse({ message: 'Origin not allowed.' }, 403, allowedOrigin);
+    }
+
+    if (request.method === 'OPTIONS') {
+        return new Response(null, {
+            status: 204,
+            headers: corsHeaders(allowedOrigin),
+        });
+    }
+
+    if (request.method !== 'GET') {
+        return jsonResponse(
+            { message: 'Method not allowed.' },
+            405,
+            allowedOrigin,
+            { Allow: 'GET, OPTIONS' },
+        );
+    }
+
+    const url = new URL(request.url);
+    const title = url.searchParams.get('title') ?? '';
+    const limit = Number.parseInt(url.searchParams.get('limit') ?? '24', 10) || 24;
+    const offset = Number.parseInt(url.searchParams.get('offset') ?? '0', 10) || 0;
+
+    try {
+        const result = await getRecipeCards(env, {
+            title,
+            limit,
+            offset,
+        });
+
+        return jsonResponse(result, 200, allowedOrigin);
+    } catch (error) {
+        console.error('Recipe browser query failed:', error);
+
+        return jsonResponse(
+            { message: 'Unable to load recipes.' },
+            500,
+            allowedOrigin,
+        );
     }
 }
