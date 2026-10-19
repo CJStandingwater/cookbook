@@ -126,23 +126,19 @@
   "timings": [
     {
       "title": "prep",
-      "value": 15,
-      "unit": "minute"
+      "minutes": 15
     },
     {
       "title": "bake",
-      "value": 65,
-      "unit": "minute"
+      "minutes": 65
     },
     {
       "title": "cool",
-      "value": 60,
-      "unit": "minute"
+      "minutes": 60
     },
     {
       "title": "chill",
-      "value": 60,
-      "unit": "minute"
+      "minutes": 60
     }
   ],
   "servings": 12,
