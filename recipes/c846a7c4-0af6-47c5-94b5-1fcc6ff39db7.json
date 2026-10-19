@@ -1,0 +1,162 @@
+{
+  "id": "c846a7c4-0af6-47c5-94b5-1fcc6ff39db7",
+  "title": "Hummingbird Cake",
+  "authors": [
+    "Grace Harrison"
+  ],
+  "ingredients": [
+    {
+      "section": "Cake",
+      "items": [
+        {
+          "item": "Flour",
+          "volume_ml": 709.765
+        },
+        {
+          "item": "Baking Soda",
+          "volume_ml": 4.929
+        },
+        {
+          "item": "Salt",
+          "volume_ml": 4.929
+        },
+        {
+          "item": "Sugar",
+          "volume_ml": 473.176
+        },
+        {
+          "item": "Eggs",
+          "count": 3,
+          "note": "Beaten"
+        },
+        {
+          "item": "Vegetable Oil",
+          "volume_ml": 354.882,
+          "note": "The original recipe did not specify what type of oil. It is assumed any neutral cooking oil will work."
+        },
+        {
+          "item": "Vanilla Extract",
+          "volume_ml": 7.393
+        },
+        {
+          "item": "Canned Crushed Pineapple",
+          "weight_g": 226.796,
+          "note": "The original recipe calls for an undrained 8oz can of crushed pineapple."
+        },
+        {
+          "item": "Cinnamon",
+          "volume_ml": 4.929
+        },
+        {
+          "item": "Bananas",
+          "count": 3,
+          "note": "Mashed"
+        },
+        {
+          "item": "Pecans",
+          "volume_ml": 236.588,
+          "note": "Finely chopped"
+        }
+      ]
+    },
+    {
+      "section": "Icing",
+      "items": [
+        {
+          "item": "Margarine",
+          "weight_g": 113.398,
+          "count": 1,
+          "note": "The original recipe calls for 1 stick of oleo. It is assumed to mean the standard 4oz."
+        },
+        {
+          "item": "Cream Cheese",
+          "weight_g": 226.796
+        },
+        {
+          "item": "Powdered Sugar",
+          "weight_g": 453.592,
+          "note": "The original recipe calls for 1 box. It is assumed to mean a pound."
+        },
+        {
+          "item": "Vanilla Extract",
+          "volume_ml": 4.929
+        },
+        {
+          "item": "Ground Nuts",
+          "volume_ml": 236.588,
+          "note": "The original recipe did not specify what type of nut, but pecans or walnuts should work."
+        }
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "action": "preheat",
+      "content": "Preheat the oven to 350° F"
+    },
+    {
+      "action": "mix",
+      "content": "Mix Flour, Baking Soda, Salt, Cinnamon, Sugar, Vegetable Oil, Eggs, and Canned Crushed Pineapple until combined."
+    },
+    {
+      "action": "fold",
+      "content": "Fold in Pecans and mashed Bananas."
+    },
+    {
+      "action": "bake",
+      "content": "Pour into a greased bundt pan and bake for 60-65 minutes."
+    },
+    {
+      "action": "cool",
+      "content": "Cool for 1 hour in the pan and turn out."
+    },
+    {
+      "action": "chill",
+      "content": "Chill in the fridge for 30-60 minutes before frosting."
+    },
+    {
+      "action": "mix",
+      "content": "Mix together Margarine, Cream Cheese, Powdered Sugar, Vanilla Extract, and Ground Nuts until smooth."
+    },
+    {
+      "action": "frost",
+      "content": "Frost the cake after it is fully chilled."
+    }
+  ],
+  "timings": [
+    {
+      "title": "prep",
+      "value": 15,
+      "unit": "minute"
+    },
+    {
+      "title": "bake",
+      "value": 65,
+      "unit": "minute"
+    },
+    {
+      "title": "cool",
+      "value": 60,
+      "unit": "minute"
+    },
+    {
+      "title": "chill",
+      "value": 60,
+      "unit": "minute"
+    }
+  ],
+  "servings": 12,
+  "tags": [
+    "dessert",
+    "fall",
+    "american",
+    "cake"
+  ],
+  "source": "Pantry Potpourri",
+  "tools": [
+    "Mixing Bowl",
+    "Whisk",
+    "Bundt Pan"
+  ],
+  "difficulty": "easy"
+}
