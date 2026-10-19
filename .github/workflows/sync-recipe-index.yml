@@ -39,7 +39,8 @@ jobs:
           mapfile -t recipes < <(
             git diff \
               --name-only \
-              --diff-filter=AM \
+              --no-renames \
+              --diff-filter=AMD \
               "$BEFORE" \
               "$AFTER" \
               -- "recipes/*.json"

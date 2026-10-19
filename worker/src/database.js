@@ -178,3 +178,9 @@ function uniqueNames(values) {
 
     return [...names.values()];
 }
+
+export async function deleteRecipeIndex(recipeId, env) {
+    await env.COOKBOOK_DB.prepare('DELETE FROM recipes WHERE id = ?1')
+        .bind(recipeId)
+        .run()
+}

@@ -37,6 +37,31 @@ async function indexRecipe(filePath) {
     console.log(`INDEXED  ${filePath}`);
 }
 
+async function deleteRecipe(filePath) {
+    const recipeId = path.basename(filePath, '.json');
+
+    const response = await fetch(
+        `${INDEX_ENDPOINT}?id=${encodeURIComponent(recipeId)}`,
+        {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${INDEX_API_KEY}`,
+            },
+        },
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+        throw new Error(
+            result.message || `Failed to remove ${filePath} from index`,
+        );
+    }
+
+    console.log(`DELETED  ${filePath}`);
+}
+
+
 async function syncRecipeIndex() {
     if (!INDEX_ENDPOINT) {
         throw new Error('INDEX_ENDPOINT is required.');
@@ -51,7 +76,11 @@ async function syncRecipeIndex() {
     }
 
     for (const recipePath of recipePaths) {
-        await indexRecipe(recipePath);
+        if (fs.existsSync(recipePath)) {
+            await indexRecipe(recipePath)
+        } else {
+            await deleteRecipe(recipePath)
+        }
     }
 }
 

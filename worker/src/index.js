@@ -4,6 +4,7 @@ import { readRecipeRequest } from "./request.js";
 import { checkSubmissionLimit } from "./limiter.js";
 import { sendRecipeEmail } from "./resend.js";
 import { upsertRecipeIndex } from "./database.js";
+import { deleteRecipeIndex, upsertRecipeIndex } from "./database.js";
 
 export { SubmissionLimiter } from "./limiter.js";
 
@@ -113,15 +114,34 @@ async function handleSubmit(request, env) {
     );
 }
 
-async function handleIndex(request, env) {
-    if (request.method !== 'POST') {
-        return jsonResponse({ message: 'Method not allowed.' }, 405, null, {
-            Allow: 'POST',
-        });
-    }
-
+async function handleIndex(request, env, pathname) {
     if (request.headers.get('Authorization') !== `Bearer ${env.INDEX_API_KEY}`) {
         return jsonResponse({ message: 'Unauthorized.' }, 401, null);
+    }
+
+    if (request.method === 'DELETE') {
+        const recipeId = new URL(request.url).searchParams.get('id');
+
+        if (!recipeId) {
+            return jsonResponse({ message: 'Recipe ID is required.' }, 400, null);
+        }
+
+        await deleteRecipeIndex(recipeId, env);
+
+        return jsonResponse(
+            {
+                message: 'Recipe removed from index.',
+                id: recipeId,
+            },
+            200,
+            null,
+        );
+    }
+
+    if (request.method !== 'POST') {
+        return jsonResponse({ message: 'Method not allowed.' }, 405, null, {
+            Allow: 'POST, DELETE',
+        });
     }
 
     const recipeRequest = await readRecipeRequest(request);
@@ -148,12 +168,6 @@ async function handleIndex(request, env) {
     } catch (error) {
         console.error('Recipe indexing failed:', error);
 
-        return jsonResponse(
-            {
-                message: 'Failed to index recipe.',
-            },
-            500,
-            null,
-        );
+        return jsonResponse({ message: 'Failed to index recipe.' }, 500, null);
     }
 }
