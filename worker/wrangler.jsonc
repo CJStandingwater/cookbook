@@ -29,7 +29,8 @@
 			"RESEND_API_KEY",
 			"SUBMISSION_FROM",
 			"SUBMISSION_TO",
-			"INDEX_API_KEY"
+			"INDEX_API_KEY",
+			"OPENAI_API_KEY"
 		]
 	}
 }

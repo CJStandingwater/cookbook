@@ -1,5 +1,4 @@
 import { formatLabel } from '../normalize.js';
-
 import { formatCount, formatVolume, formatWeight } from './measurements.js';
 
 const substituteSelections = new WeakMap();
@@ -52,7 +51,7 @@ function buildHeader(recipe) {
 
 function buildMetadata(recipe) {
     const metadata = createElement('div', 'recipe-metadata');
-    const multiplier = document.querySelector('input[name="recipe-multiplier"]').value;
+    const multiplier = document.querySelector('input[name="recipe-multiplier"]')?.value ?? 1;
 
     if (recipe.servings !== undefined) {
         metadata.appendChild(
@@ -308,7 +307,7 @@ function refreshIngredientNotes(section, container) {
 
 function formatIngredientMeasurement(ingredient, system) {
     const measurements = [];
-    const multiplier = document.querySelector('input[name="recipe-multiplier"]').value;
+    const multiplier = document.querySelector('input[name="recipe-multiplier"]')?.value ?? 1;
 
     if (ingredient.volume_ml !== undefined) {
         measurements.push(formatVolume(ingredient.volume_ml * multiplier, system));

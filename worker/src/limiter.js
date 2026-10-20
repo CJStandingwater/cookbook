@@ -77,3 +77,10 @@ export async function checkSubmissionLimit(request, env) {
     const limiter = env.SUBMISSION_LIMITER.getByName("global");
     return limiter.reserve(ip);
 }
+
+export async function checkImportLimit(request, env) {
+    const ip = getClientIp(request);
+    const limiter = env.SUBMISSION_LIMITER.getByName('import');
+
+    return limiter.reserve(ip);
+}

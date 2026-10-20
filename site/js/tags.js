@@ -63,3 +63,11 @@ export function getSelectedTags() {
     return [...document.querySelectorAll(".recipe-tag:checked")]
         .map(input => input.value);
 }
+
+export function setSelectedTags(tags = []) {
+    const selected = new Set(tags)
+
+    for (const checkbox of document.querySelectorAll('.recipe-tag')) {
+        checkbox.checked = selected.has(checkbox.value)
+    }
+}

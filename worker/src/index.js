@@ -1,16 +1,18 @@
 import { corsHeaders, jsonResponse } from "./responses.js";
 import { getAllowedOrigin } from "./cors.js";
 import { readRecipeRequest } from "./request.js";
-import { checkSubmissionLimit } from "./limiter.js";
+import { checkImportLimit, checkSubmissionLimit } from "./limiter.js";
 import { sendRecipeEmail } from "./resend.js";
 import { deleteRecipeIndex, getRecipeCards, upsertRecipeIndex } from './database.js';
 import { parseSearch, SearchSyntaxError, validateSearchRules } from './search.js';
+import { importRecipe } from './import.js';
 
 export { SubmissionLimiter } from "./limiter.js";
 
 const SUBMISSION_EP = "/submit";
 const INDEX_EP = "/index";
 const BROWSER_EP = '/browse';
+const IMPORT_EP = '/import';
 
 export default {
     async fetch(request, env) {
@@ -21,6 +23,8 @@ export default {
                 return handleIndex(request, env);
             case BROWSER_EP:
                 return handleBrowse(request, env);
+            case IMPORT_EP:
+                return handleImport(request, env);
             default:
                 return Response.json(
                     { message: "Not Found" },
@@ -234,4 +238,80 @@ async function handleBrowse(request, env) {
             allowedOrigin,
         );
     }
+}
+
+async function handleImport(request, env) {
+    const allowedOrigin = getAllowedOrigin(request);
+
+    if (allowedOrigin === false) {
+        return jsonResponse({ message: 'Origin not allowed.' }, 403, allowedOrigin);
+    }
+
+    if (request.method === 'OPTIONS') {
+        return new Response(null, {
+            status: 204,
+            headers: corsHeaders(allowedOrigin),
+        });
+    }
+
+    if (request.method !== 'POST') {
+        return jsonResponse(
+            { message: 'Method not allowed.' },
+            405,
+            allowedOrigin,
+            { Allow: 'POST, OPTIONS' },
+        );
+    }
+
+    const limit = await checkImportLimit(request, env);
+
+    if (!limit.allowed) {
+        const retryAfterSeconds = Math.max(1, Math.ceil(limit.retryAfterMs / 1000));
+
+        return jsonResponse(
+            {
+                message: 'Wait before importing another recipe.',
+            },
+            429,
+            allowedOrigin,
+            {
+                'Retry-After': String(retryAfterSeconds),
+            },
+        );
+    }
+
+    let formData;
+
+    try {
+        formData = await request.formData();
+    } catch {
+        return jsonResponse(
+            {
+                message: 'Invalid recipe upload.',
+            },
+            400,
+            allowedOrigin,
+        );
+    }
+
+    const result = await importRecipe(formData.get('file'), env);
+
+    if (!result.ok) {
+        return jsonResponse(
+            {
+                message: result.message,
+                errors: result.errors,
+            },
+            result.status,
+            allowedOrigin,
+        );
+    }
+
+    return jsonResponse(
+        {
+            recipe: result.recipe,
+        },
+        200,
+        allowedOrigin,
+    );
 }

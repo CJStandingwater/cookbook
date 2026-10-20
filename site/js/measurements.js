@@ -1,7 +1,4 @@
-import {
-    VOLUME_CONVERSIONS,
-    WEIGHT_CONVERSIONS
-} from "./constants.js";
+import { VOLUME_CONVERSIONS, WEIGHT_CONVERSIONS } from "./constants.js";
 import { cloneTemplate } from "./dom.js";
 
 export function optionalNumber(input) {
@@ -55,4 +52,12 @@ export function hasMeasurement(element) {
         ".weight-amount",
         ".count-amount"
     ].some(selector => element.querySelector(selector).value.trim() !== "");
+}
+
+export function populateMeasurements(element, measurement) {
+    element.querySelector('.volume-amount').value = measurement.volume_ml ?? '';
+    element.querySelector('.weight-amount').value = measurement.weight_g ?? '';
+    element.querySelector('.count-amount').value = measurement.count ?? '';
+    element.querySelector('.volume-unit').value = 'ml';
+    element.querySelector('.weight-unit').value = 'g';
 }
