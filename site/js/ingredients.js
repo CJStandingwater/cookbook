@@ -1,5 +1,5 @@
 import { cloneTemplate } from './dom.js';
-import { addMeasurementFields, buildMeasurements } from './measurements.js';
+import { addMeasurementFields, buildMeasurements, populateMeasurements } from './measurements.js';
 import { normalizeName, normalizeWhitespace } from './normalize.js';
 
 export function addIngredientGroup(container) {
@@ -153,4 +153,61 @@ export function buildIngredients() {
             return result;
         },
     );
+}
+
+export function populateIngredients(groups) {
+    const container = document.getElementById('ingredient-groups');
+
+    container.replaceChildren();
+
+    for (const groupData of groups) {
+        addIngredientGroup(container);
+
+        const group = container.lastElementChild;
+
+        group.querySelector('.section-name').value = groupData.section ?? '';
+
+        const items = group.querySelector('.ingredient-items');
+
+        items.replaceChildren();
+
+        for (const ingredient of groupData.items) {
+            addIngredientItem(items);
+
+            populateIngredientItem(items.lastElementChild, ingredient);
+        }
+    }
+}
+
+function populateIngredientItem(element, ingredient) {
+    element.querySelector('.ingredient-name').value = ingredient.item;
+    element.querySelector('.ingredient-optional').checked = ingredient.optional ?? false;
+    element.querySelector('.ingredient-note').value = ingredient.note ?? '';
+
+    populateMeasurements(element, ingredient);
+
+    const sets = element.querySelector('.substitute-sets');
+
+    for (const substituteSet of ingredient.substitutes ?? []) {
+        addSubstituteSet(sets);
+
+        const set = sets.lastElementChild;
+        const items = set.querySelector('.substitute-items');
+
+        items.replaceChildren();
+
+        for (const substitute of substituteSet) {
+            addSubstituteItem(items);
+
+            populateSubstituteItem(items.lastElementChild, substitute);
+        }
+    }
+}
+
+function populateSubstituteItem(element, substitute) {
+    element.querySelector('.substitute-name').value = substitute.item;
+    element.querySelector('.substitute-optional').checked = substitute.optional ?? false;
+    element.querySelector('.substitute-note').value = substitute.note ?? '';
+
+    populateMeasurements(element, substitute);
 }

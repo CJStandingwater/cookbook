@@ -81,3 +81,37 @@ export function buildTimings() {
         })
         .filter(Boolean);
 }
+
+export function populateInstructions(instructions) {
+    const container = document.getElementById('instructions');
+
+    container.replaceChildren();
+
+    for (const data of instructions) {
+        addInstruction(container);
+
+        const instruction = container.lastElementChild;
+
+        instruction.querySelector('.instruction-action').value = data.action;
+        instruction.querySelector('.instruction-content').value = data.content;
+        instruction.querySelector('.instruction-notes').value = (
+            data.notes ?? []
+        ).join('\n');
+    }
+}
+
+export function populateTimings(timings = []) {
+    const container = document.getElementById('timings');
+
+    container.replaceChildren();
+
+    for (const data of timings) {
+        addTiming(container);
+
+        const timing = container.lastElementChild;
+
+        timing.querySelector('.timing-title').value = data.title;
+        timing.querySelector('.timing-value').value = data.minutes;
+        timing.querySelector('.timing-unit').value = 'minute';
+    }
+}

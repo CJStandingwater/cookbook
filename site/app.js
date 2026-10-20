@@ -5,6 +5,8 @@ import { loadTags } from './js/tags.js';
 import { validateDynamicFields } from './js/validation.js';
 import { submitRecipe } from './js/submission.js';
 import { initializeRecipePreview } from './js/view/preview.js';
+import { importRecipeFile } from './js/import.js';
+import { populateRecipeForm } from './js/populate.js';
 
 const ingredientGroupsContainer = document.getElementById('ingredient-groups');
 const instructionsContainer = document.getElementById('instructions');
@@ -16,6 +18,9 @@ const jsonOutput = document.getElementById('json-output');
 const submitRecipeButton = document.getElementById('submit-recipe');
 const submissionStatus = document.getElementById('submission-status');
 const recipeForm = document.getElementById('recipe-form');
+const importFile = document.getElementById('recipe-import-file');
+const importRecipeButton = document.getElementById('import-recipe');
+const importStatus = document.getElementById('import-status');
 
 document
     .getElementById('add-ingredient-group')
@@ -69,8 +74,46 @@ submitRecipeButton.addEventListener('click', async () => {
     }
 });
 
+importRecipeButton.addEventListener('click', async () => {
+    const file = importFile.files[0];
+
+    importStatus.textContent = '';
+    importStatus.classList.remove('error');
+
+    if (!file) {
+        importStatus.textContent = 'Select a recipe file to import.';
+
+        importStatus.classList.add('error');
+        return;
+    }
+
+    importRecipeButton.disabled = true;
+    importStatus.textContent = 'Importing recipe...';
+
+    try {
+        const recipe = await importRecipeFile(file);
+
+        await tagsReady;
+
+        populateRecipeForm(recipe);
+
+        formError.textContent = '';
+
+        jsonOutput.value = JSON.stringify(buildRecipe(), null, 2);
+
+        importStatus.textContent =
+            'Recipe imported successfully. Review the form before submitting.';
+    } catch (error) {
+        importStatus.textContent = error.message || 'Recipe import failed.';
+
+        importStatus.classList.add('error');
+    } finally {
+        importRecipeButton.disabled = false;
+    }
+});
+
 initializeRecipePreview();
 
 addIngredientGroup(ingredientGroupsContainer);
 addInstruction(instructionsContainer);
-loadTags(tagContainer, tagError);
+const tagsReady = loadTags(tagContainer, tagError);

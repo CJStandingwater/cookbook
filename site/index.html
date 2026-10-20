@@ -20,6 +20,25 @@
 
         <form id="recipe-form">
             <fieldset>
+                <legend>Import Recipe</legend>
+
+                <label for="recipe-import-file"> Recipe File </label>
+
+                <input id="recipe-import-file" type="file" />
+
+                <button type="button" id="import-recipe" class="primary-button">
+                    Import Recipe
+                </button>
+
+                <p id="import-status" class="status" role="status"></p>
+
+                <p class="hint">
+                    Select a file containing a recipe. A successful import will populate the
+                    form for review before submission.
+                </p>
+            </fieldset>
+
+            <fieldset>
                 <legend>Recipe</legend>
 
                 <label for="title">Title *</label>
