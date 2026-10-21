@@ -43,6 +43,17 @@ export function buildMeasurements(element) {
         result.count = count;
     }
 
+    const metric = element.querySelector('.preferred-metric').value;
+
+    const imperial = element.querySelector('.preferred-imperial').value;
+
+    if (metric || imperial) {
+        result.preferred_measurement = {
+            metric,
+            imperial,
+        };
+    }
+
     return result;
 }
 
@@ -60,4 +71,34 @@ export function populateMeasurements(element, measurement) {
     element.querySelector('.count-amount').value = measurement.count ?? '';
     element.querySelector('.volume-unit').value = 'ml';
     element.querySelector('.weight-unit').value = 'g';
+    element.querySelector('.preferred-metric').value = measurement.preferred_measurement?.metric ?? '';
+    element.querySelector('.preferred-imperial').value = measurement.preferred_measurement?.imperial ?? '';
+}
+
+export function validateMeasurementPreference(element) {
+    const metric = element.querySelector('.preferred-metric').value;
+
+    const imperial = element.querySelector('.preferred-imperial').value;
+
+    if (!metric && !imperial) {
+        return null;
+    }
+
+    if (!metric || !imperial) {
+        return 'Both metric and imperial measurement preferences must be selected.';
+    }
+
+    const hasVolume = element.querySelector('.volume-amount').value.trim() !== '';
+
+    const hasWeight = element.querySelector('.weight-amount').value.trim() !== '';
+
+    if ((metric === 'volume' || imperial === 'volume') && !hasVolume) {
+        return 'Volume cannot be preferred without a volume measurement.';
+    }
+
+    if ((metric === 'weight' || imperial === 'weight') && !hasWeight) {
+        return 'Weight cannot be preferred without a weight measurement.';
+    }
+
+    return null;
 }

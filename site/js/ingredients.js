@@ -1,6 +1,7 @@
 import { cloneTemplate } from './dom.js';
 import { addMeasurementFields, buildMeasurements, populateMeasurements } from './measurements.js';
 import { normalizeName, normalizeWhitespace } from './normalize.js';
+import { addFormFields, getSelectedForms, populateForms } from './forms.js';
 
 export function addIngredientGroup(container) {
     const group = cloneTemplate('ingredient-group-template');
@@ -22,6 +23,7 @@ function addIngredientItem(container) {
     const item = cloneTemplate('ingredient-template');
     const substituteSets = item.querySelector('.substitute-sets');
 
+    addFormFields(item);
     addMeasurementFields(item);
 
     item
@@ -54,6 +56,7 @@ function addSubstituteSet(container) {
 function addSubstituteItem(container) {
     const item = cloneTemplate('substitute-item-template');
 
+    addFormFields(item);
     addMeasurementFields(item);
 
     item
@@ -65,9 +68,15 @@ function addSubstituteItem(container) {
 
 function buildSubstituteItem(element) {
     const substitute = {
-        item: normalizeName(element.querySelector('.substitute-name').value),
+        ingredient: normalizeName(element.querySelector('.substitute-name').value),
         ...buildMeasurements(element),
     };
+
+    const forms = getSelectedForms(element);
+
+    if (forms.length) {
+        substitute.form = forms;
+    }
 
     if (element.querySelector('.substitute-optional').checked) {
         substitute.optional = true;
@@ -125,9 +134,15 @@ export function buildIngredients() {
                 ),
             ].map((element) => {
                 const ingredient = {
-                    item: normalizeName(element.querySelector('.ingredient-name').value),
+                    ingredient: normalizeName(element.querySelector('.ingredient-name').value),
                     ...buildMeasurements(element),
                 };
+
+                const forms = getSelectedForms(element);
+
+                if (forms.length) {
+                    ingredient.form = forms;
+                }
 
                 if (element.querySelector('.ingredient-optional').checked) {
                     ingredient.optional = true;
@@ -180,10 +195,11 @@ export function populateIngredients(groups) {
 }
 
 function populateIngredientItem(element, ingredient) {
-    element.querySelector('.ingredient-name').value = ingredient.item;
+    element.querySelector('.ingredient-name').value = ingredient.ingredient
     element.querySelector('.ingredient-optional').checked = ingredient.optional ?? false;
     element.querySelector('.ingredient-note').value = ingredient.note ?? '';
 
+    populateForms(element, ingredient.form)
     populateMeasurements(element, ingredient);
 
     const sets = element.querySelector('.substitute-sets');
@@ -205,9 +221,10 @@ function populateIngredientItem(element, ingredient) {
 }
 
 function populateSubstituteItem(element, substitute) {
-    element.querySelector('.substitute-name').value = substitute.item;
+    element.querySelector('.substitute-name').value = substitute.ingredient;
     element.querySelector('.substitute-optional').checked = substitute.optional ?? false;
     element.querySelector('.substitute-note').value = substitute.note ?? '';
 
+    populateForms(element, substitute.form);
     populateMeasurements(element, substitute);
 }

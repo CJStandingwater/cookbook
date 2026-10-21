@@ -1,10 +1,17 @@
 import { populateIngredients } from './ingredients.js';
 import { populateInstructions, populateTimings } from './instructions.js';
 import { setSelectedTags } from './tags.js';
+import { populateImage } from './images.js';
 
 export function populateRecipeForm(recipe) {
     document.getElementById('title').value = recipe.title;
     document.getElementById('authors').value = recipe.authors.join(', ');
+
+    populateImage(
+        recipe.image,
+        document.getElementById('recipe-image'),
+        document.getElementById('recipe-image-alt'),
+    )
 
     populateIngredients(recipe.ingredients);
     populateInstructions(recipe.instructions);

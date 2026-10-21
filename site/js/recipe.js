@@ -1,8 +1,5 @@
 import { buildIngredients } from "./ingredients.js";
-import {
-    buildInstructions,
-    buildTimings
-} from "./instructions.js";
+import { buildInstructions, buildTimings } from "./instructions.js";
 import { optionalNumber } from "./measurements.js";
 import {
     normalizeName,
@@ -11,6 +8,7 @@ import {
     splitLines
 } from "./normalize.js";
 import { getSelectedTags } from "./tags.js";
+import { buildImage } from './images.js';
 
 function buildNutrition() {
     const nutrition = {};
@@ -40,8 +38,18 @@ export function buildRecipe() {
         title: normalizeWhitespace(document.getElementById("title").value),
         authors: splitCommaSeparated(document.getElementById("authors").value),
         ingredients: buildIngredients(),
-        instructions: buildInstructions()
+        instructions: buildInstructions(recipeId)
     };
+    const image = buildImage(
+        document.getElementById('recipe-image'),
+        document.getElementById('recipe-image-alt'),
+        recipeId,
+        0,
+    )
+
+    if (image) {
+        recipe.image = image
+    }
 
     const timings = buildTimings();
     const servings = optionalNumber(document.getElementById("servings"));

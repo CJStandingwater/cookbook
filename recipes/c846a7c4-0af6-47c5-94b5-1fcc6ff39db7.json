@@ -9,53 +9,64 @@
       "section": "Cake",
       "items": [
         {
-          "item": "Flour",
+          "ingredient": "Flour",
           "volume_ml": 709.765
         },
         {
-          "item": "Baking Soda",
+          "ingredient": "Baking Soda",
           "volume_ml": 4.929
         },
         {
-          "item": "Salt",
+          "ingredient": "Salt",
           "volume_ml": 4.929
         },
         {
-          "item": "Sugar",
+          "ingredient": "Sugar",
           "volume_ml": 473.176
         },
         {
-          "item": "Eggs",
-          "count": 3,
-          "note": "Beaten"
+          "ingredient": "Egg",
+          "form": [
+            "beaten"
+          ],
+          "count": 3
         },
         {
-          "item": "Vegetable Oil",
+          "ingredient": "Vegetable Oil",
           "volume_ml": 354.882,
           "note": "The original recipe did not specify what type of oil. It is assumed any neutral cooking oil will work."
         },
         {
-          "item": "Vanilla Extract",
+          "ingredient": "Vanilla Extract",
           "volume_ml": 7.393
         },
         {
-          "item": "Canned Crushed Pineapple",
+          "ingredient": "Pineapple",
+          "form": [
+            "canned",
+            "crushed"
+          ],
           "weight_g": 226.796,
-          "note": "The original recipe calls for an undrained 8oz can of crushed pineapple."
+          "note": "The original recipe calls for an undrained 8 oz can of crushed pineapple."
         },
         {
-          "item": "Cinnamon",
+          "ingredient": "Cinnamon",
           "volume_ml": 4.929
         },
         {
-          "item": "Bananas",
-          "count": 3,
-          "note": "Mashed"
+          "ingredient": "Banana",
+          "form": [
+            "mashed"
+          ],
+          "count": 3
         },
         {
-          "item": "Pecans",
+          "ingredient": "Pecan",
+          "form": [
+            "chopped"
+          ],
           "volume_ml": 236.588,
-          "note": "Finely chopped"
+          "note": "Finely"
         }
       ]
     },
@@ -63,26 +74,29 @@
       "section": "Icing",
       "items": [
         {
-          "item": "Margarine",
+          "ingredient": "Margarine",
           "weight_g": 113.398,
           "count": 1,
-          "note": "The original recipe calls for 1 stick of oleo. It is assumed to mean the standard 4oz."
+          "note": "The original recipe calls for 1 stick of oleo. It is assumed to mean the standard 4 oz."
         },
         {
-          "item": "Cream Cheese",
+          "ingredient": "Cream Cheese",
           "weight_g": 226.796
         },
         {
-          "item": "Powdered Sugar",
+          "ingredient": "Powdered Sugar",
           "weight_g": 453.592,
           "note": "The original recipe calls for 1 box. It is assumed to mean a pound."
         },
         {
-          "item": "Vanilla Extract",
+          "ingredient": "Vanilla Extract",
           "volume_ml": 4.929
         },
         {
-          "item": "Ground Nuts",
+          "ingredient": "Nuts",
+          "form": [
+            "ground"
+          ],
           "volume_ml": 236.588,
           "note": "The original recipe did not specify what type of nut, but pecans or walnuts should work."
         }

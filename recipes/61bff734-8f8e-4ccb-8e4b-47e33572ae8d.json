@@ -9,39 +9,53 @@
       "section": "Filling",
       "items": [
         {
-          "item": "Unsalted Butter",
+          "ingredient": "Unsalted Butter",
           "volume_ml": 29.574,
           "note": "Divided"
         },
         {
-          "item": "Red Bell Pepper",
-          "volume_ml": 59.147,
-          "note": "Diced"
+          "ingredient": "Red Bell Pepper",
+          "form": [
+            "diced"
+          ],
+          "volume_ml": 59.147
         },
         {
-          "item": "Green Bell Pepper",
-          "volume_ml": 59.147,
-          "note": "Diced"
+          "ingredient": "Green Bell Pepper",
+          "form": [
+            "diced"
+          ],
+          "volume_ml": 59.147
         },
         {
-          "item": "Yellow Onion",
-          "volume_ml": 59.147,
-          "note": "Diced"
+          "ingredient": "Yellow Onion",
+          "form": [
+            "diced"
+          ],
+          "volume_ml": 59.147
         },
         {
-          "item": "Scallion",
+          "ingredient": "Scallion",
+          "form": [
+            "sliced"
+          ],
           "count": 1,
-          "note": "Thinly sliced"
+          "note": "Thinly"
         },
         {
-          "item": "Deli Ham",
-          "count": 2,
-          "note": "Slices; chopped"
+          "ingredient": "Deli Ham",
+          "form": [
+            "sliced",
+            "chopped"
+          ],
+          "count": 2
         },
         {
-          "item": "Pepper Jack Cheese",
-          "volume_ml": 59.147,
-          "note": "Shredded"
+          "ingredient": "Pepper Jack Cheese",
+          "form": [
+            "shredded"
+          ],
+          "volume_ml": 59.147
         }
       ]
     },
@@ -49,12 +63,14 @@
       "section": "Egg Mix",
       "items": [
         {
-          "item": "Eggs",
-          "count": 3,
-          "note": "Large"
+          "ingredient": "Egg",
+          "form": [
+            "large"
+          ],
+          "count": 3
         },
         {
-          "item": "Salt",
+          "ingredient": "Salt",
           "volume_ml": 1.232
         }
       ]

@@ -1,14 +1,24 @@
 const RESEND_API_URL = "https://api.resend.com/emails";
 
-function toBase64(value) {
-    const bytes = new TextEncoder().encode(value);
-    let binary = "";
+function toBase64(bytes) {
+    const chunkSize = 0x8000;
+    let binary = '';
 
-    for (const byte of bytes) {
-        binary += String.fromCharCode(byte);
+    for (let offset = 0; offset < bytes.length; offset += chunkSize) {
+        binary += String.fromCharCode(
+            ...bytes.subarray(offset, offset + chunkSize),
+        );
     }
 
     return btoa(binary);
+}
+
+function textToBase64(value) {
+    return toBase64(new TextEncoder().encode(value));
+}
+
+async function fileToBase64(file) {
+    return toBase64(new Uint8Array(await file.arrayBuffer()));
 }
 
 function escapeHtml(value) {
@@ -20,8 +30,24 @@ function escapeHtml(value) {
         .replaceAll("'", "&#039;");
 }
 
-export async function sendRecipeEmail(recipe, env) {
+export async function sendRecipeEmail(recipe, images, env) {
     const json = JSON.stringify(recipe, null, 2);
+
+    const attachments = [
+        {
+            filename: `${recipe.id}.json`,
+            content: textToBase64(json),
+            content_type: 'application/json',
+        },
+    ]
+
+    for (const image of images) {
+        attachments.push({
+            filename: image.filename,
+            content: await fileToBase64(image.file),
+            content_type: image.file.type,
+        })
+    }
 
     const response = await fetch(
         RESEND_API_URL,
@@ -48,13 +74,7 @@ export async function sendRecipeEmail(recipe, env) {
                         ${escapeHtml(recipe.title)}
                     </p>
                 `,
-                attachments: [
-                    {
-                        filename: `${recipe.id}.json`,
-                        content: toBase64(json),
-                        content_type: "application/json"
-                    }
-                ]
+                attachments
             })
         }
     );

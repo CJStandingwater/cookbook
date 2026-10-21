@@ -50,6 +50,12 @@
                        required
                        placeholder="John Doe, Jane Doe" />
                 <p class="hint">Separate multiple authors with commas.</p>
+
+                <label>Recipe Image</label>
+                <input id="recipe-image" type="file" accept="image/jpeg,image/png,image/webp" />
+
+                <label for="recipe-image-alt">Image Description</label>
+                <input id="recipe-image-alt" type="text" />
             </fieldset>
 
             <fieldset>
@@ -264,6 +270,26 @@
                     items.
                 </p>
             </div>
+
+            <div class="row preferred-measurements">
+                <div>
+                    <label>Preferred Metric Measurement</label>
+                    <select class="preferred-metric">
+                        <option value="">Not specified</option>
+                        <option value="volume">Volume</option>
+                        <option value="weight">Weight</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Preferred Imperial Measurement</label>
+                    <select class="preferred-imperial">
+                        <option value="">Not specified</option>
+                        <option value="volume">Volume</option>
+                        <option value="weight">Weight</option>
+                    </select>
+                </div>
+            </div>
         </div>
     </template>
 
@@ -274,6 +300,12 @@
 
             <details class="ingredient-details">
                 <summary>Details</summary>
+
+                <label>Form</label>
+                <select class="ingredient-form" multiple size="6"></select>
+                <p class="hint">
+                    Select preparation, state, or size modifiers that apply to this ingredient.
+                </p>
 
                 <div class="measurement-slot"></div>
 
@@ -321,6 +353,12 @@
             <label>Substitute Ingredient *</label>
             <input class="substitute-name" type="text" required />
 
+            <label>Form</label>
+            <select class="ingredient-form" multiple size="6"></select>
+            <p class="hint">
+                Select preparation, state, or size modifiers that apply to this ingredient.
+            </p>
+
             <div class="measurement-slot"></div>
 
             <label class="checkbox-option">
@@ -350,6 +388,14 @@
             <label>Notes</label>
             <textarea class="instruction-notes"
                       placeholder="Enter one note per line."></textarea>
+
+            <label>Step Image</label>
+            <input class="instruction-image"
+                   type="file"
+                   accept="image/jpeg,image/png,image/webp" />
+
+            <label>Image Description</label>
+            <input class="instruction-image-alt" type="text" />
 
             <button type="button" class="remove-button remove-instruction">
                 Remove Instruction

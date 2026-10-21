@@ -3,6 +3,11 @@ export const TAG_SOURCES = [
     "https://raw.githubusercontent.com/CJStandingwater/cookbook/main/schema/tags.enum.json",
 ];
 
+export const FORM_SOURCES = [
+    "../schema/forms.enum.json",
+    "https://raw.githubusercontent.com/CJStandingwater/cookbook/main/schema/forms.enum.json",
+];
+
 export const INSTRUCTION_ACTIONS = [
     "assemble",
     "bake",

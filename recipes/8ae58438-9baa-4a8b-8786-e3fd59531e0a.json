@@ -9,19 +9,23 @@
       "section": "Apple Mixture",
       "items": [
         {
-          "item": "Finely Chopped Apples",
-          "volume_ml": 946.353
+          "ingredient": "Apple",
+          "form": [
+            "chopped"
+          ],
+          "volume_ml": 946.353,
+          "note": "Finely"
         },
         {
-          "item": "Sugar",
+          "ingredient": "Sugar",
           "volume_ml": 236.588
         },
         {
-          "item": "Flour",
+          "ingredient": "Flour",
           "volume_ml": 118.294
         },
         {
-          "item": "Brown Sugar",
+          "ingredient": "Brown Sugar",
           "volume_ml": 118.294
         }
       ]
@@ -30,19 +34,22 @@
       "section": "Topping",
       "items": [
         {
-          "item": "Oatmeal",
+          "ingredient": "Oatmeal",
           "volume_ml": 118.294
         },
         {
-          "item": "Melted Butter",
+          "ingredient": "Butter",
+          "form": [
+            "melted"
+          ],
           "volume_ml": 118.294
         },
         {
-          "item": "Brown Sugar",
+          "ingredient": "Brown Sugar",
           "volume_ml": 59.147
         },
         {
-          "item": "Flour",
+          "ingredient": "Flour",
           "volume_ml": 29.574
         }
       ]

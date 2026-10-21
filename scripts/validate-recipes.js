@@ -27,6 +27,10 @@ const difficultySchemaPath = path.join(
     __dirname,
     "../schema/difficulty.enum.json"
 );
+const formsSchemaPath = path.join(
+    __dirname,
+    "../schema/forms.enum.json"
+);
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function readJson(filePath) {
@@ -71,6 +75,7 @@ function validateRecipes() {
     let actionsSchema;
     let toolsSchema;
     let difficultySchema;
+    let formsSchema;
 
     try {
         recipeSchema = readJson(recipeSchemaPath);
@@ -79,6 +84,7 @@ function validateRecipes() {
         actionsSchema = readJson(actionsSchemaPath);
         toolsSchema = readJson(toolsSchemaPath);
         difficultySchema = readJson(difficultySchemaPath);
+        formsSchema = readJson(formsSchemaPath);
     } catch (error) {
         console.error("Failed to load schema files.");
         console.error(error.message);
@@ -94,6 +100,7 @@ function validateRecipes() {
     ajv.addSchema(actionsSchema);
     ajv.addSchema(toolsSchema);
     ajv.addSchema(difficultySchema);
+    ajv.addSchema(formsSchema);
 
     let validate;
 

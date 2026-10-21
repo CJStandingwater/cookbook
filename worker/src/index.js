@@ -1,6 +1,6 @@
 import { corsHeaders, jsonResponse } from "./responses.js";
 import { getAllowedOrigin } from "./cors.js";
-import { readRecipeRequest } from "./request.js";
+import { readRecipeRequest, readSubmissionRequest } from "./request.js";
 import { checkImportLimit, checkSubmissionLimit } from "./limiter.js";
 import { sendRecipeEmail } from "./resend.js";
 import { deleteRecipeIndex, getRecipeCards, upsertRecipeIndex } from './database.js';
@@ -69,7 +69,7 @@ async function handleSubmit(request, env) {
         );
     }
 
-    const recipeRequest = await readRecipeRequest(request);
+    const recipeRequest = await readSubmissionRequest(request);
 
     if (!recipeRequest.ok) {
         return jsonResponse(
@@ -97,7 +97,12 @@ async function handleSubmit(request, env) {
         );
     }
 
-    const email = await sendRecipeEmail(recipeRequest.recipe, env);
+    const email =
+        await sendRecipeEmail(
+            recipeRequest.recipe,
+            recipeRequest.images,
+            env,
+        );
 
     if (!email.ok) {
         return jsonResponse(
