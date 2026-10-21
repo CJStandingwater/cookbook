@@ -146,7 +146,7 @@ function addRelations(
 function getIngredientNames(recipe) {
     return (recipe.ingredients ?? [])
         .flatMap((section) => section.items ?? [])
-        .map((ingredient) => ingredient.item);
+        .map((ingredient) => ingredient.ingredient);
 }
 
 function getTotalMinutes(timings = []) {
@@ -283,6 +283,18 @@ export async function getRecipeCards(env, options = {}) {
         })),
         hasMore,
     };
+}
+
+export async function getKnownIngredientNames(env) {
+    const { results } = await env.COOKBOOK_DB.prepare(
+        `
+            SELECT name
+            FROM ingredients
+            ORDER BY name COLLATE NOCASE
+            `,
+    ).all()
+
+    return results.map((ingredient) => ingredient.name)
 }
 
 const RELATION_SEARCHES = {

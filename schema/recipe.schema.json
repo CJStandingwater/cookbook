@@ -34,6 +34,10 @@
       }
     },
 
+    "image": {
+      "$ref": "common.json#/$defs/image"
+    },
+
     "ingredients": {
       "type": "array",
       "minItems": 1,
@@ -78,6 +82,10 @@
           "content": {
             "type": "string",
             "minLength": 1
+          },
+
+          "image": {
+            "$ref": "common.json#/$defs/image"
           },
 
           "notes": {

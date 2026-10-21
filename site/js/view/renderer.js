@@ -40,6 +40,10 @@ function buildHeader(recipe) {
         ),
     );
 
+    if (recipe.image) {
+        header.appendChild(buildImage(recipe.image, 'recipe-image'))
+    }
+
     const metadata = buildMetadata(recipe);
 
     if (metadata.hasChildNodes()) {
@@ -206,8 +210,8 @@ function buildSubstituteControls(ingredient, options, selectedIndex, onSelect) {
 
         button.textContent =
             index === 0
-                ? `Original: ${ingredient.item}`
-                : option.map((item) => item.item).join(' + ');
+                ? `Original: ${formatIngredientName(ingredient)}`
+                : option.map(formatIngredientName).join(' + ')
 
         button.setAttribute(
             'aria-pressed',
@@ -238,31 +242,24 @@ function updateSubstituteControls(controls, selectedIndex) {
 
 function buildIngredientLine(ingredient, system) {
     const line = createElement('div', 'ingredient-line');
+    const measurement = formatIngredientMeasurement(ingredient, system);
+    const name = createElement('span', 'ingredient-name', formatIngredientName(ingredient));
 
     if (ingredient.note) {
         line.dataset.note = ingredient.note;
-    }
-
-    const measurement = formatIngredientMeasurement(ingredient, system);
-
-    if (measurement) {
-        line.appendChild(
-            createElement('span', 'ingredient-measurement', measurement),
-        );
-    }
-
-    const name = createElement('span', 'ingredient-name', ingredient.item);
-
-    if (ingredient.note) {
         name.appendChild(createElement('sup', 'ingredient-note-marker'));
     }
-
+    
+    if (measurement) {
+        line.appendChild(createElement('span', 'ingredient-measurement', measurement));
+    }
+        
     line.appendChild(name);
 
     if (ingredient.optional) {
         line.appendChild(createElement('span', 'ingredient-optional', 'Optional'));
     }
-
+        
     return line;
 }
 
@@ -305,16 +302,41 @@ function refreshIngredientNotes(section, container) {
     container.hidden = notes.length === 0;
 }
 
+function formatIngredientName(ingredient) {
+    const forms = (ingredient.form ?? []).map(formatLabel)
+
+    return [...forms, ingredient.ingredient].join(' ')
+}
+
 function formatIngredientMeasurement(ingredient, system) {
     const measurements = [];
-    const multiplier = document.querySelector('input[name="recipe-multiplier"]')?.value ?? 1;
 
-    if (ingredient.volume_ml !== undefined) {
-        measurements.push(formatVolume(ingredient.volume_ml * multiplier, system));
-    }
+    const multiplier = Number(
+        document.querySelector('input[name="recipe-multiplier"]')?.value ?? 1,
+    );
 
-    if (ingredient.weight_g !== undefined) {
-        measurements.push(formatWeight(ingredient.weight_g * multiplier, system));
+    const preference = ingredient.preferred_measurement?.[system];
+
+    if (preference === 'volume') {
+        if (ingredient.volume_ml !== undefined) {
+            measurements.push(
+                formatVolume(ingredient.volume_ml * multiplier, system),
+            );
+        }
+    } else if (preference === 'weight') {
+        if (ingredient.weight_g !== undefined) {
+            measurements.push(formatWeight(ingredient.weight_g * multiplier, system));
+        }
+    } else {
+        if (ingredient.volume_ml !== undefined) {
+            measurements.push(
+                formatVolume(ingredient.volume_ml * multiplier, system),
+            );
+        }
+
+        if (ingredient.weight_g !== undefined) {
+            measurements.push(formatWeight(ingredient.weight_g * multiplier, system));
+        }
     }
 
     if (ingredient.count !== undefined) {
@@ -345,6 +367,10 @@ function buildInstructions(instructions) {
         item.appendChild(
             createElement('p', 'instruction-content', instruction.content),
         );
+
+        if (instruction.image) {
+            item.appendChild(buildImage(instruction.image, 'instruction-image'))
+        }
 
         if (instruction.notes?.length) {
             item.appendChild(buildTextList(instruction.notes, 'instruction-notes'));
@@ -442,6 +468,21 @@ function createElement(tagName, className = null, text = null) {
 
     if (text !== null) {
         element.textContent = text;
+    }
+
+    return element;
+}
+
+function buildImage(image, className) {
+    const element = document.createElement('img');
+
+    element.className = className;
+    element.src = image.src;
+    element.alt = image.alt;
+    element.decoding = 'async';
+
+    if (className === 'instruction-image') {
+        element.loading = 'lazy';
     }
 
     return element;

@@ -173,3 +173,17 @@ form,
             margin-top: 0.4rem;
             break-inside: avoid;
         }
+
+/* Images */
+
+    .recipe-viewer .recipe-image,
+    .recipe-preview .recipe-image {
+        max-height: 3in;
+        margin: 0.4rem 0;
+    }
+
+    .recipe-viewer .instruction-image,
+    .recipe-preview .instruction-image {
+        max-height: 2.25in;
+        margin: 0.3rem 0;
+    }

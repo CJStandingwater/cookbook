@@ -19,7 +19,7 @@ function normalizeIngredientName(name) {
 function getIngredientNames(recipe) {
     return recipe.ingredients
         .flatMap(section => section.items)
-        .map(ingredient => normalizeIngredientName(ingredient.item))
+        .map(ingredient => normalizeIngredientName(ingredient.ingredient))
         .sort();
 }
 

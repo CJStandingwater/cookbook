@@ -7,6 +7,8 @@ import { submitRecipe } from './js/submission.js';
 import { initializeRecipePreview } from './js/view/preview.js';
 import { importRecipeFile } from './js/import.js';
 import { populateRecipeForm } from './js/populate.js';
+import { initializeForms } from './js/forms.js';
+import { getSelectedImageFiles } from './js/images.js';
 
 const ingredientGroupsContainer = document.getElementById('ingredient-groups');
 const instructionsContainer = document.getElementById('instructions');
@@ -63,7 +65,7 @@ submitRecipeButton.addEventListener('click', async () => {
     submissionStatus.textContent = 'Submitting recipe...';
 
     try {
-        const result = await submitRecipe(recipe);
+        const result = await submitRecipe(recipe, getSelectedImageFiles());
 
         submissionStatus.textContent =
             result.message || 'Recipe submitted successfully.';
@@ -113,6 +115,8 @@ importRecipeButton.addEventListener('click', async () => {
 });
 
 initializeRecipePreview();
+
+await initializeForms();
 
 addIngredientGroup(ingredientGroupsContainer);
 addInstruction(instructionsContainer);

@@ -2,6 +2,7 @@ import { INSTRUCTION_ACTIONS } from './constants.js';
 import { cloneTemplate } from './dom.js';
 import { optionalNumber, roundMeasurement } from './measurements.js';
 import { formatLabel, normalizeWhitespace, splitLines } from './normalize.js';
+import { buildImage, populateImage } from './images.js';
 
 export function addInstruction(container) {
     const instruction = cloneTemplate('instruction-template');
@@ -31,11 +32,11 @@ export function addTiming(container) {
     container.appendChild(timing);
 }
 
-export function buildInstructions() {
+export function buildInstructions(recipeId) {
     const container = document.getElementById('instructions');
 
     return [...container.querySelectorAll(':scope > .instruction')].map(
-        (element) => {
+        (element, index) => {
             const instruction = {
                 action: element.querySelector('.instruction-action').value,
 
@@ -50,6 +51,17 @@ export function buildInstructions() {
 
             if (notes.length) {
                 instruction.notes = notes;
+            }
+
+            const image = buildImage(
+                element.querySelector('.instruction-image'),
+                element.querySelector('.instruction-image-alt'),
+                recipeId,
+                index + 1,
+            )
+
+            if (image) {
+                instruction.image = image
             }
 
             return instruction;
@@ -98,6 +110,12 @@ export function populateInstructions(instructions) {
             data.notes ?? []
         ).join('\n');
     }
+
+    populateImage(
+        data.image,
+        instruction.querySelector('.instruction-image'),
+        instruction.querySelector('.instruction-image-alt'),
+    )
 }
 
 export function populateTimings(timings = []) {

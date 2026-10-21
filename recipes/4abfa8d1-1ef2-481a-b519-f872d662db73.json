@@ -1,0 +1,175 @@
+{
+  "id": "4abfa8d1-1ef2-481a-b519-f872d662db73",
+  "title": "Slow Cooker Cheesy Potato Soup with Ham",
+  "authors": [
+    "fabeveryday"
+  ],
+  "ingredients": [
+    {
+      "items": [
+        {
+          "ingredient": "Hash Brown Potatoes",
+          "weight_g": 794,
+          "form": [
+            "frozen",
+            "thawed"
+          ]
+        },
+        {
+          "ingredient": "Ham",
+          "volume_ml": 480,
+          "weight_g": 230,
+          "preferred_measurement": {
+            "metric": "weight",
+            "imperial": "volume"
+          },
+          "form": [
+            "diced"
+          ]
+        },
+        {
+          "ingredient": "Onion",
+          "volume_ml": 120,
+          "weight_g": 130,
+          "preferred_measurement": {
+            "metric": "weight",
+            "imperial": "volume"
+          },
+          "form": [
+            "diced"
+          ]
+        },
+        {
+          "ingredient": "Celery Stalks",
+          "count": 2,
+          "form": [
+            "chopped"
+          ]
+        },
+        {
+          "ingredient": "Chicken Broth",
+          "volume_ml": 960
+        },
+        {
+          "ingredient": "Salt",
+          "volume_ml": 1.25,
+          "weight_g": 1.5,
+          "preferred_measurement": {
+            "metric": "weight",
+            "imperial": "volume"
+          }
+        },
+        {
+          "ingredient": "Pepper",
+          "volume_ml": 1.25,
+          "weight_g": 0.5,
+          "preferred_measurement": {
+            "metric": "weight",
+            "imperial": "volume"
+          }
+        },
+        {
+          "ingredient": "Garlic Powder",
+          "volume_ml": 1.25,
+          "weight_g": 1,
+          "preferred_measurement": {
+            "metric": "weight",
+            "imperial": "volume"
+          },
+          "substitutes": [
+            [
+              {
+                "ingredient": "Garlic Clove",
+                "count": 1,
+                "form": [
+                  "minced"
+                ]
+              }
+            ]
+          ]
+        },
+        {
+          "ingredient": "Cream Cheese",
+          "weight_g": 227,
+          "form": [
+            "softened"
+          ]
+        },
+        {
+          "ingredient": "Cheddar Cheese",
+          "weight_g": 227,
+          "form": [
+            "shredded"
+          ]
+        },
+        {
+          "ingredient": "Green Onion",
+          "volume_ml": 30,
+          "weight_g": 20,
+          "preferred_measurement": {
+            "metric": "weight",
+            "imperial": "volume"
+          },
+          "form": [
+            "chopped"
+          ],
+          "note": "Or to taste; for garnish"
+        }
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "action": "combine",
+      "content": "Combine hash browns, ham, onion, celery, chicken broth, salt, pepper, and garlic powder in a slow cooker. Stir well and cover."
+    },
+    {
+      "action": "simmer",
+      "content": "Cook on Low until the celery is soft, 4 to 5 hours."
+    },
+    {
+      "action": "stir",
+      "content": "Mix in cream cheese and Cheddar cheese, stirring until melted. Cover and cook on Low for another 30 minutes, stirring occasionally."
+    },
+    {
+      "action": "serve",
+      "content": "Serve topped with chopped green onions."
+    }
+  ],
+  "timings": [
+    {
+      "title": "prep time",
+      "minutes": 5
+    },
+    {
+      "title": "cook time",
+      "minutes": 270
+    },
+    {
+      "title": "total time",
+      "minutes": 275
+    }
+  ],
+  "servings": 6,
+  "tags": [
+    "dinner",
+    "comfort",
+    "slow-cook",
+    "soup"
+  ],
+  "notes": [
+    "A way to use leftover holiday ham."
+  ],
+  "nutrition": {
+    "calories": 518,
+    "protein": 24,
+    "fat": 42,
+    "carbohydrates": 28,
+    "fiber": 2
+  },
+  "source": "https://www.allrecipes.com/recipe/273023/easy-slow-cooker-cheesy-potato-soup-with-ham/",
+  "tools": [
+    "Slow Cooker"
+  ],
+  "difficulty": "easy"
+}
